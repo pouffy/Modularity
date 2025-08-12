@@ -1,0 +1,10 @@
+{
+  "attack_damage_bonus": 3.0,
+  "enchantability": 10,
+  "incorrect_tool_for_drops_tag": "minecraft:incorrect_for_diamond_tool",
+  "repair": {
+    "tag": "c:gems/diamond"
+  },
+  "speed": 8.0,
+  "uses": 1561
+}

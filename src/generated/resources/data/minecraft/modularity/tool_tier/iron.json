@@ -1,0 +1,10 @@
+{
+  "attack_damage_bonus": 2.0,
+  "enchantability": 14,
+  "incorrect_tool_for_drops_tag": "minecraft:incorrect_for_iron_tool",
+  "repair": {
+    "tag": "c:ingots/iron"
+  },
+  "speed": 6.0,
+  "uses": 250
+}

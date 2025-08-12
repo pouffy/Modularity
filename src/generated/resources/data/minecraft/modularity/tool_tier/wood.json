@@ -1,0 +1,10 @@
+{
+  "attack_damage_bonus": 0.0,
+  "enchantability": 15,
+  "incorrect_tool_for_drops_tag": "minecraft:incorrect_for_wooden_tool",
+  "repair": {
+    "tag": "minecraft:planks"
+  },
+  "speed": 2.0,
+  "uses": 59
+}

@@ -1,0 +1,10 @@
+{
+  "attack_damage_bonus": 1.0,
+  "enchantability": 5,
+  "incorrect_tool_for_drops_tag": "minecraft:incorrect_for_stone_tool",
+  "repair": {
+    "tag": "minecraft:stone_tool_materials"
+  },
+  "speed": 4.0,
+  "uses": 131
+}

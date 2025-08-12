@@ -1,0 +1,10 @@
+{
+  "attack_damage_bonus": 0.0,
+  "enchantability": 22,
+  "incorrect_tool_for_drops_tag": "minecraft:incorrect_for_gold_tool",
+  "repair": {
+    "tag": "c:ingots/gold"
+  },
+  "speed": 12.0,
+  "uses": 32
+}
