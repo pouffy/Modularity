@@ -2,7 +2,10 @@ package com.pouffydev.modularity.datagen;
 
 import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaTiers;
+import com.pouffydev.modularity.datagen.client.ModulaItemModelProvider;
+import com.pouffydev.modularity.datagen.client.ModulaLangProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -25,16 +28,25 @@ public class ModulaDatagen {
         PackOutput packOutput = dataGenerator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        boolean client = event.includeClient();
+        boolean server = event.includeServer();
+
+        ModulaLangProvider language = new ModulaLangProvider(packOutput, modId, "en_us");
+        ModulaItemModelProvider itemModels = new ModulaItemModelProvider(packOutput, modId, fileHelper);
         //Tags
 
         // add providers
+        dataGenerator.addProvider(client, itemModels);
+
+        dataGenerator.addProvider(event.includeClient() && event.includeServer(), language);
 
         // Built-in data entries
         event.getGenerator().addProvider(
                 event.includeServer(),
                 (DataProvider.Factory<DatapackBuiltinEntriesProvider>) output -> new DatapackBuiltinEntriesProvider(output, lookupProvider, new RegistrySetBuilder()
                         .add(ModularityRegistries.TOOL_TIER, ModulaTiers::bootstrap)
-                        , Set.of(modId, "minecraft"))
+                        .add(ModularityRegistries.TOOL_MATERIAL, ModulaMaterials::bootstrap)
+                        , Set.of(modId))
         );
     }
 }

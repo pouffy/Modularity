@@ -1,7 +1,6 @@
 package com.pouffydev.modularity.api.tool;
 
 import com.pouffydev.modularity.common.registry.ModulaItemAbilities;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -9,11 +8,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,12 +18,12 @@ public class ModularItem extends TieredItem {
 
     private final int maxStackSize;
 
-    public ModularItem(Tier tier, Properties properties) {
-        this(tier, properties, 1);
+    public ModularItem(Properties properties) {
+        this(properties, 1);
     }
 
-    public ModularItem(Tier tier, Properties properties, int maxStackSize) {
-        super(tier, properties);
+    public ModularItem(Properties properties, int maxStackSize) {
+        super(EmptyTier.INSTANCE, properties);
         this.maxStackSize = maxStackSize;
     }
 

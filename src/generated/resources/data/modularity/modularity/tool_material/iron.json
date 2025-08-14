@@ -1,0 +1,21 @@
+{
+  "info": {
+    "asset_name": "iron",
+    "color": "#C1C1C1"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:head",
+        "attack": 1.0,
+        "durability": 250,
+        "speed": -2.8,
+        "tier": "modularity:iron"
+      },
+      {
+        "type": "modularity:hilt",
+        "speed": 0.3
+      }
+    ]
+  }
+}

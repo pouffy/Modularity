@@ -1,22 +1,25 @@
 package com.pouffydev.modularity.common.registry;
 
+import com.mojang.serialization.MapCodec;
 import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.material.parts.IToolPart;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.common.RegistryHelper;
+import com.pouffydev.modularity.common.tools.parts.ToolHandle;
 import com.pouffydev.modularity.common.tools.parts.ToolHead;
+import com.pouffydev.modularity.common.tools.parts.ToolHilt;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 public class ModulaToolParts {
     public static final DeferredRegister<ToolPartType<?>> TOOL_PARTS = RegistryHelper.createRegister(ModularityRegistries.TOOL_PART_TYPE);
 
-    //public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHead>> HEAD = register("head", () -> new ToolPartType<>(new ToolHead()));
+    public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHead>> HEAD = register("head", ToolHead.CODEC);
+    public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHandle>> HANDLE = register("handle", ToolHandle.CODEC);
+    public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHilt>> HILT = register("hilt", ToolHilt.CODEC);
 
-    public static <T extends IToolPart> DeferredHolder<ToolPartType<?>, ToolPartType<T>> register(String name, Supplier<ToolPartType<T>> supplier) {
-        return TOOL_PARTS.register(name, supplier);
+    public static <T extends IToolPart> DeferredHolder<ToolPartType<?>, ToolPartType<T>> register(String name, MapCodec<T> codec) {
+        return TOOL_PARTS.register(name, () -> new ToolPartType<>(codec));
     }
 
     public static void staticInit() {}

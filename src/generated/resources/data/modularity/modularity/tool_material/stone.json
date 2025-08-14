@@ -1,0 +1,21 @@
+{
+  "info": {
+    "asset_name": "stone",
+    "color": "#7F7F7F"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:head",
+        "attack": 1.0,
+        "durability": 131,
+        "speed": -2.8,
+        "tier": "modularity:stone"
+      },
+      {
+        "type": "modularity:hilt",
+        "speed": -0.1
+      }
+    ]
+  }
+}

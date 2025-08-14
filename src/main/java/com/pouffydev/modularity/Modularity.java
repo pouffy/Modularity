@@ -1,5 +1,6 @@
 package com.pouffydev.modularity;
 
+import com.pouffydev.modularity.common.registry.ModulaCreativeTab;
 import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaItems;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
@@ -35,8 +36,9 @@ public class Modularity {
 
     public static void onCtor(IEventBus modEventBus, ModContainer modContainer) {
         ModulaDataComponents.staticInit();
-        ModulaItems.staticInit();
         ModulaToolParts.staticInit();
+        ModulaItems.staticInit();
+        ModulaCreativeTab.staticInit();
     }
 
     @SubscribeEvent

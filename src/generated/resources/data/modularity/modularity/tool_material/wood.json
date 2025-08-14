@@ -1,0 +1,25 @@
+{
+  "info": {
+    "asset_name": "wood",
+    "color": "#5E4719"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:head",
+        "attack": 1.0,
+        "durability": 60,
+        "speed": -2.8,
+        "tier": "modularity:wood"
+      },
+      {
+        "type": "modularity:handle",
+        "durability": 0.0
+      },
+      {
+        "type": "modularity:hilt",
+        "speed": 0.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "info": {
+    "asset_name": "diamond",
+    "color": "#2BE0D8"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:head",
+        "attack": 1.0,
+        "durability": 1561,
+        "speed": -2.8,
+        "tier": "modularity:diamond"
+      },
+      {
+        "type": "modularity:hilt",
+        "speed": 0.1
+      }
+    ]
+  }
+}

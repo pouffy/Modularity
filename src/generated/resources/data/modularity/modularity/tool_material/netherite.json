@@ -1,0 +1,21 @@
+{
+  "info": {
+    "asset_name": "netherite",
+    "color": "#5D565D"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:head",
+        "attack": 1.0,
+        "durability": 2031,
+        "speed": -2.8,
+        "tier": "modularity:netherite"
+      },
+      {
+        "type": "modularity:hilt",
+        "speed": 0.5
+      }
+    ]
+  }
+}

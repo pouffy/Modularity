@@ -1,14 +1,33 @@
 package com.pouffydev.modularity.api.tool.part;
 
+import com.pouffydev.modularity.api.material.item.ITabFiller;
+import com.pouffydev.modularity.api.material.item.MaterialItem;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
-public class ToolPartItem extends Item {
-    public final ResourceKey<ToolPartType<?>> toolPartType;
+import java.util.function.Consumer;
 
-    public ToolPartItem(Properties properties, ResourceKey<ToolPartType<?>> toolPartType) {
+public class ToolPartItem extends MaterialItem implements ITabFiller {
+    public final Holder<ToolPartType<?>> toolPartType;
+
+    @Override
+    public void fillItemCategory(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output) {
+        accept(output::accept, params.holders());
+    }
+
+    public ToolPartItem(Properties properties, Holder<ToolPartType<?>> toolPartType) {
         super(properties);
         this.toolPartType = toolPartType;
+    }
+
+    public ToolPartType<?> getType() {
+        return toolPartType.value();
+    }
+
+    private void accept(Consumer<ItemStack> output, HolderLookup.Provider lookupProvider) {
+        addMaterials(output, lookupProvider);
     }
 }

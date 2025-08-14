@@ -20,12 +20,12 @@ import java.util.Collection;
 import java.util.List;
 
 public class ModulaTiers {
-    public static final ResourceKey<SerializableTier> WOOD = create("minecraft", "wood");
-    public static final ResourceKey<SerializableTier> STONE = create("minecraft", "stone");
-    public static final ResourceKey<SerializableTier> IRON = create("minecraft", "iron");
-    public static final ResourceKey<SerializableTier> DIAMOND = create("minecraft", "diamond");
-    public static final ResourceKey<SerializableTier> GOLD = create("minecraft", "gold");
-    public static final ResourceKey<SerializableTier> NETHERITE = create("minecraft", "netherite");
+    public static final ResourceKey<SerializableTier> WOOD = create("wood");
+    public static final ResourceKey<SerializableTier> STONE = create("stone");
+    public static final ResourceKey<SerializableTier> IRON = create("iron");
+    public static final ResourceKey<SerializableTier> DIAMOND = create("diamond");
+    public static final ResourceKey<SerializableTier> GOLD = create("gold");
+    public static final ResourceKey<SerializableTier> NETHERITE = create("netherite");
 
     private static ResourceKey<SerializableTier> create(String namespace, String path) {
         return ResourceKey.create(ModularityRegistries.TOOL_TIER, ResourceLocation.fromNamespaceAndPath(namespace, path));

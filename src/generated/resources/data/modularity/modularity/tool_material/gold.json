@@ -1,0 +1,21 @@
+{
+  "info": {
+    "asset_name": "gold",
+    "color": "#FAD64A"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:head",
+        "attack": 1.0,
+        "durability": 32,
+        "speed": -2.8,
+        "tier": "modularity:gold"
+      },
+      {
+        "type": "modularity:hilt",
+        "speed": -0.4
+      }
+    ]
+  }
+}
