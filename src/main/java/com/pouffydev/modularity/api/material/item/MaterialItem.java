@@ -19,7 +19,7 @@ public class MaterialItem extends Item implements IMaterialItem {
         Holder<ToolMaterial> material = getMaterial(stack);
         String materialName = "";
         if (material != null) {
-            String materialLangKey = Util.makeDescriptionId("tool_material", ResourceLocation.parse(material.value().info().assetName()));
+            String materialLangKey = Util.makeDescriptionId("tool_material", material.getKey().location());
             materialName = Component.translatable(materialLangKey).getString() + " ";
         }
 

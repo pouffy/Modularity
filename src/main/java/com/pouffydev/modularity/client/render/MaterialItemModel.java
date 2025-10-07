@@ -58,7 +58,7 @@ public record MaterialItemModel(ResourceKey<ToolMaterial> material, Vec2 offset,
         Material texture = owner.getMaterial("texture");
         ResourceLocation textureLoc = texture.texture();
         if (material != null) {
-            textureLoc = texture.texture().withSuffix("_" + material.location().toString().replace(':', '_'));
+            textureLoc = texture.texture().withSuffix("/" + material.location().toString().replace(':', '_'));
         }
         final TextureAtlasSprite baseSprite = spriteGetter.apply(new Material(InventoryMenu.BLOCK_ATLAS, textureLoc));
         final var builder = CompositeModel.Baked.builder(owner, baseSprite, overrides, owner.getTransforms());
@@ -94,7 +94,9 @@ public record MaterialItemModel(ResourceKey<ToolMaterial> material, Vec2 offset,
         @Nullable
         @ParametersAreNonnullByDefault
         public BakedModel resolve(BakedModel originalModel, ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-            return cache.computeIfAbsent(IMaterialItem.getMaterialFromStack(stack).getKey(), this::bakeDynamic);
+            var material = IMaterialItem.getMaterialFromStack(stack);
+            if (material == null) return originalModel;
+            return cache.computeIfAbsent(material.getKey(), this::bakeDynamic);
         }
 
         private BakedModel bakeDynamic(ResourceKey<ToolMaterial> material) {

@@ -1,0 +1,73 @@
+{
+  "tools": [
+    {
+      "item": "minecraft:netherite_shovel",
+      "parts": [
+        {
+          "material": "modularity:netherite",
+          "part": "modularity:shovel_head"
+        },
+        {
+          "material": "modularity:nether_wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:netherite_pickaxe",
+      "parts": [
+        {
+          "material": "modularity:netherite",
+          "part": "modularity:pickaxe_head"
+        },
+        {
+          "material": "modularity:nether_wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:netherite_axe",
+      "parts": [
+        {
+          "material": "modularity:netherite",
+          "part": "modularity:axe_head"
+        },
+        {
+          "material": "modularity:nether_wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:netherite_hoe",
+      "parts": [
+        {
+          "material": "modularity:netherite",
+          "part": "modularity:hoe_head"
+        },
+        {
+          "material": "modularity:nether_wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:netherite_sword",
+      "parts": [
+        {
+          "material": "modularity:netherite",
+          "part": "modularity:sword_blade"
+        },
+        {
+          "material": "modularity:netherite",
+          "part": "modularity:hilt"
+        },
+        {
+          "material": "modularity:nether_wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    }
+  ]
+}

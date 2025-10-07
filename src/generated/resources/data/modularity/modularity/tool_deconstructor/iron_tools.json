@@ -1,0 +1,73 @@
+{
+  "tools": [
+    {
+      "item": "minecraft:iron_shovel",
+      "parts": [
+        {
+          "material": "modularity:iron",
+          "part": "modularity:shovel_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:iron_pickaxe",
+      "parts": [
+        {
+          "material": "modularity:iron",
+          "part": "modularity:pickaxe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:iron_axe",
+      "parts": [
+        {
+          "material": "modularity:iron",
+          "part": "modularity:axe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:iron_hoe",
+      "parts": [
+        {
+          "material": "modularity:iron",
+          "part": "modularity:hoe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:iron_sword",
+      "parts": [
+        {
+          "material": "modularity:iron",
+          "part": "modularity:sword_blade"
+        },
+        {
+          "material": "modularity:iron",
+          "part": "modularity:hilt"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "tools": [
+    {
+      "item": "minecraft:golden_shovel",
+      "parts": [
+        {
+          "material": "modularity:gold",
+          "part": "modularity:shovel_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:golden_pickaxe",
+      "parts": [
+        {
+          "material": "modularity:gold",
+          "part": "modularity:pickaxe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:golden_axe",
+      "parts": [
+        {
+          "material": "modularity:gold",
+          "part": "modularity:axe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:golden_hoe",
+      "parts": [
+        {
+          "material": "modularity:gold",
+          "part": "modularity:hoe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:golden_sword",
+      "parts": [
+        {
+          "material": "modularity:gold",
+          "part": "modularity:sword_blade"
+        },
+        {
+          "material": "modularity:gold",
+          "part": "modularity:hilt"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    }
+  ]
+}

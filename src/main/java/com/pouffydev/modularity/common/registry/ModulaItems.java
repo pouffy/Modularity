@@ -4,6 +4,8 @@ import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.api.tool.part.ToolPartItem;
 import com.pouffydev.modularity.common.RegistryHelper;
+import com.pouffydev.modularity.common.tools.ModularPickaxeItem;
+import com.pouffydev.modularity.common.tools.ModularSwordItem;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -26,6 +28,8 @@ public class ModulaItems {
     public static final DeferredItem<ToolPartItem> SWORD_BLADE = registerToolPart("sword_blade", ModulaToolParts.HEAD);
     public static final DeferredItem<ToolPartItem> HILT = registerToolPart("hilt", ModulaToolParts.HILT);
 
+    public static final DeferredItem<ModularSwordItem> SWORD = register("sword", () -> new ModularSwordItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<ModularPickaxeItem> PICKAXE = register("pickaxe", () -> new ModularPickaxeItem(new Item.Properties().stacksTo(1)));
 
     private static DeferredItem<Item> registerSimple(String name) {
         return register(name, SIMPLE_SUPPLIER);

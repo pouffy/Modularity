@@ -37,8 +37,8 @@ public interface IMaterialItem extends ItemLike {
     }
 
     static Holder<ToolMaterial> getMaterialFromStack(ItemStack stack) {
-        if ((stack.getItem() instanceof IMaterialItem)) {
-            return ((IMaterialItem) stack.getItem()).getMaterial(stack);
+        if (stack.getItem() instanceof IMaterialItem materialItem) {
+            return materialItem.getMaterial(stack);
         }
         return null;
     }

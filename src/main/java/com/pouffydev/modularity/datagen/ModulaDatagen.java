@@ -2,6 +2,7 @@ package com.pouffydev.modularity.datagen;
 
 import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.common.registry.bootstrap.ModulaDeconstructors;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaTiers;
 import com.pouffydev.modularity.datagen.client.ModulaItemModelProvider;
@@ -46,6 +47,7 @@ public class ModulaDatagen {
                 (DataProvider.Factory<DatapackBuiltinEntriesProvider>) output -> new DatapackBuiltinEntriesProvider(output, lookupProvider, new RegistrySetBuilder()
                         .add(ModularityRegistries.TOOL_TIER, ModulaTiers::bootstrap)
                         .add(ModularityRegistries.TOOL_MATERIAL, ModulaMaterials::bootstrap)
+                        .add(ModularityRegistries.TOOL_DECONSTRUCTOR, ModulaDeconstructors::bootstrap)
                         , Set.of(modId))
         );
     }

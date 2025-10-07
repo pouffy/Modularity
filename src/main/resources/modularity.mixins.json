@@ -5,10 +5,9 @@
   "package": "com.pouffydev.modularity.mixin",
   "refmap": "modularity.refmap.json",
   "mixins": [
-
+    "ExistingFileHelperMixin"
   ],
   "client": [
-
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,73 @@
+{
+  "tools": [
+    {
+      "item": "minecraft:diamond_shovel",
+      "parts": [
+        {
+          "material": "modularity:diamond",
+          "part": "modularity:shovel_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:diamond_pickaxe",
+      "parts": [
+        {
+          "material": "modularity:diamond",
+          "part": "modularity:pickaxe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:diamond_axe",
+      "parts": [
+        {
+          "material": "modularity:diamond",
+          "part": "modularity:axe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:diamond_hoe",
+      "parts": [
+        {
+          "material": "modularity:diamond",
+          "part": "modularity:hoe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:diamond_sword",
+      "parts": [
+        {
+          "material": "modularity:diamond",
+          "part": "modularity:sword_blade"
+        },
+        {
+          "material": "modularity:diamond",
+          "part": "modularity:hilt"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    }
+  ]
+}

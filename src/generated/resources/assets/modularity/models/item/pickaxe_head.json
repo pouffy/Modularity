@@ -1,4 +1,11 @@
 {
   "parent": "neoforge:item/default",
-  "loader": "modularity:material"
+  "loader": "modularity:material",
+  "offset": [
+    0.0,
+    0.0
+  ],
+  "textures": {
+    "texture": "modularity:item/parts/pickaxe_head"
+  }
 }

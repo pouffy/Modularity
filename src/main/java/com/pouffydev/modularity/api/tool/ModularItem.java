@@ -1,18 +1,25 @@
 package com.pouffydev.modularity.api.tool;
 
+import com.pouffydev.modularity.api.material.ToolMaterial;
+import com.pouffydev.modularity.api.material.item.IMaterialItem;
+import com.pouffydev.modularity.api.material.parts.IToolPart;
+import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaItemAbilities;
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ModularItem extends TieredItem {
 
@@ -25,6 +32,49 @@ public class ModularItem extends TieredItem {
     public ModularItem(Properties properties, int maxStackSize) {
         super(EmptyTier.INSTANCE, properties);
         this.maxStackSize = maxStackSize;
+    }
+
+    public String getItemName(ItemStack stack) {
+        String itemName = Component.translatable(stack.getDescriptionId()).getString();
+        Holder<ToolMaterial> material = getMainMaterial(stack);
+        String materialName = "";
+        if (material != null) {
+            String materialLangKey = Util.makeDescriptionId("tool_material", material.getKey().location());
+            materialName = Component.translatable(materialLangKey).getString() + " ";
+        }
+
+        return materialName + itemName;
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        return Component.literal(getItemName(stack));
+    }
+
+    public Holder<ToolMaterial> getMainMaterial(ItemStack stack) {
+        var comp = getPartsFromStack(stack);
+        if (comp != null) {
+            for (ModularPart part : comp) {
+                ToolMaterial material = part.material().value();
+                IToolPart toolPart = material.stats().getPartOfType(part.type());
+                if (toolPart != null && toolPart.isMainPart()) {
+                    return part.material();
+                }
+            }
+        }
+        return null;
+    }
+
+    public static List<ModularPart> getPartsFromStack(ItemStack stack) {
+        if (stack.getItem() instanceof ModularItem modularItem) {
+            return modularItem.getParts(stack);
+        }
+        return null;
+    }
+
+    public List<ModularPart> getParts(ItemStack stack) {
+        if (!stack.has(ModulaDataComponents.MULTIPART)) return null;
+        return stack.get(ModulaDataComponents.MULTIPART);
     }
 
     @Override
@@ -58,7 +108,13 @@ public class ModularItem extends TieredItem {
 
     @Override
     public void verifyComponentsAfterLoad(ItemStack stack) {
+        if (!stack.has(DataComponents.ATTRIBUTE_MODIFIERS) || stack.has(ModulaDataComponents.REINIT_ATTRIBUTES)) {
+            initializeAttributes(stack);
+        }
+    }
 
+    public void initializeAttributes(ItemStack stack) {
+        stack.remove(ModulaDataComponents.REINIT_ATTRIBUTES);
     }
 
     @Override
@@ -81,6 +137,7 @@ public class ModularItem extends TieredItem {
         }
         return false;
     }
+
 
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {

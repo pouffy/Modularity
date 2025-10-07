@@ -1,6 +1,7 @@
 package com.pouffydev.modularity.api.events;
 
 import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.api.assembly.deconstruction.ToolDeconstructor;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.tool.SerializableTier;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,6 +14,7 @@ public class RegistryEvents {
     public void newDatapackRegistry(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(ModularityRegistries.TOOL_TIER, SerializableTier.DIRECT_CODEC, SerializableTier.DIRECT_CODEC);
         event.dataPackRegistry(ModularityRegistries.TOOL_MATERIAL, ToolMaterial.DIRECT_CODEC, ToolMaterial.DIRECT_CODEC);
+        event.dataPackRegistry(ModularityRegistries.TOOL_DECONSTRUCTOR, ToolDeconstructor.DIRECT_CODEC, ToolDeconstructor.DIRECT_CODEC);
     }
 
     @SubscribeEvent

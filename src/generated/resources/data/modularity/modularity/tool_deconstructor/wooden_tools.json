@@ -1,0 +1,73 @@
+{
+  "tools": [
+    {
+      "item": "minecraft:wooden_shovel",
+      "parts": [
+        {
+          "material": "modularity:wood",
+          "part": "modularity:shovel_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:wooden_pickaxe",
+      "parts": [
+        {
+          "material": "modularity:wood",
+          "part": "modularity:pickaxe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:wooden_axe",
+      "parts": [
+        {
+          "material": "modularity:wood",
+          "part": "modularity:axe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:wooden_hoe",
+      "parts": [
+        {
+          "material": "modularity:wood",
+          "part": "modularity:hoe_head"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:wooden_sword",
+      "parts": [
+        {
+          "material": "modularity:wood",
+          "part": "modularity:sword_blade"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:hilt"
+        },
+        {
+          "material": "modularity:wood",
+          "part": "modularity:tool_handle"
+        }
+      ]
+    }
+  ]
+}

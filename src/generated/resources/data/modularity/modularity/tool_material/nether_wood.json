@@ -1,0 +1,14 @@
+{
+  "info": {
+    "asset_name": "nether_wood",
+    "color": "#603432"
+  },
+  "stats": {
+    "parts": [
+      {
+        "type": "modularity:handle",
+        "durability": 1.2
+      }
+    ]
+  }
+}

@@ -2,6 +2,7 @@ package com.pouffydev.modularity.api;
 
 import com.mojang.serialization.Lifecycle;
 import com.pouffydev.modularity.Modularity;
+import com.pouffydev.modularity.api.assembly.deconstruction.ToolDeconstructor;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.api.tool.SerializableTier;
@@ -15,6 +16,9 @@ public class ModularityRegistries {
     public static final ResourceKey<Registry<ToolMaterial>> TOOL_MATERIAL = createRegistryKey("tool_material");
     public static final ResourceKey<Registry<SerializableTier>> TOOL_TIER = createRegistryKey("tool_tier");
     public static final ResourceKey<Registry<ToolPartType<?>>> TOOL_PART_TYPE = createRegistryKey("tool_part_type");
+
+    public static final ResourceKey<Registry<ToolDeconstructor>> TOOL_DECONSTRUCTOR = createRegistryKey("tool_deconstructor");
+
 
     public static final Registry<ToolPartType<?>> TOOL_PART_TYPE_REGISTRY = makeSyncedRegistry(TOOL_PART_TYPE);
 

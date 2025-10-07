@@ -38,7 +38,7 @@ public record ModularPart(ToolPartType<?> type, Holder<ToolMaterial> material) {
         ResourceLocation materialLoc = Objects.requireNonNull(material().getKey()).location();
         String partName = Objects.requireNonNull(ModularityRegistries.TOOL_PART_TYPE_REGISTRY.getKey(type)).getPath();
         String materialFile = materialLoc.toString().replace(':', '_');
-        return ResourceLocation.fromNamespaceAndPath(itemKey.getNamespace(), "item/"+itemKey.getPath()+"/"+partName+"/"+materialFile);
+        return ResourceLocation.fromNamespaceAndPath(itemKey.getNamespace(), "item/tools/"+itemKey.getPath()+"/"+partName+"/"+materialFile);
     }
 
     // Use for getting the sprite for single items

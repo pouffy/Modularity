@@ -45,7 +45,16 @@ public class ModulaItemModelProvider extends LodestoneItemModelProvider {
             }
             basicItem(item);
         }
-        material(ModulaItems.TOOL_HANDLE, "extras/tool_handle", new Vec2(0, 0));
+        material(ModulaItems.TOOL_HANDLE, "parts/tool_handle", new Vec2(0, 0));
+        material(ModulaItems.PICKAXE_HEAD, "parts/pickaxe_head", new Vec2(0, 0));
+        material(ModulaItems.AXE_HEAD, "parts/axe_head", new Vec2(0, 0));
+        material(ModulaItems.SHOVEL_HEAD, "parts/shovel_head", new Vec2(0, 0));
+        material(ModulaItems.HOE_HEAD, "parts/hoe_head", new Vec2(0, 0));
+        material(ModulaItems.SWORD_BLADE, "parts/sword_blade", new Vec2(0, 0));
+        material(ModulaItems.HILT, "parts/hilt", new Vec2(0, 0));
+
+        modular(ModulaItems.SWORD);
+        modular(ModulaItems.PICKAXE);
     }
 
     private void basicItem(Supplier<? extends Item> item) {
@@ -62,9 +71,9 @@ public class ModulaItemModelProvider extends LodestoneItemModelProvider {
     private ItemModelBuilder material(Supplier<? extends Item> item, String path, Vec2 offset) {
         String name = BuiltInRegistries.ITEM.getKey(item.get()).getPath();
         return getBuilder(name)
-                .customLoader((builder, helper) -> new MaterialLoaderBuilder(builder, helper, offset)).end()
                 .parent(new ModelFile.UncheckedModelFile("neoforge:item/default"))
-                .texture("texture", modLoc("item/"+path));
+                .texture("texture", modLoc("item/"+path))
+                .customLoader((builder, helper) -> new MaterialLoaderBuilder(builder, helper, offset)).end();
     }
 
 }

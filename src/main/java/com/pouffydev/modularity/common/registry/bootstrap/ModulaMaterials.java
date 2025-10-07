@@ -29,6 +29,7 @@ public class ModulaMaterials {
     public static final ResourceKey<ToolMaterial> DIAMOND = create("diamond");
     public static final ResourceKey<ToolMaterial> GOLD = create("gold");
     public static final ResourceKey<ToolMaterial> NETHERITE = create("netherite");
+    public static final ResourceKey<ToolMaterial> NETHER_WOOD = create("nether_wood");
 
     private static ResourceKey<ToolMaterial> create(String namespace, String path) {
         return ResourceKey.create(ModularityRegistries.TOOL_MATERIAL, ResourceLocation.fromNamespaceAndPath(namespace, path));
@@ -41,8 +42,8 @@ public class ModulaMaterials {
         register(context, UNKNOWN, new MaterialInfo(TextColor.fromRgb(0xd23de5), "unknown"), new MaterialStats(List.of()));
         register(context, WOOD, new MaterialInfo(TextColor.fromRgb(0x5e4719), "wood"), new MaterialStats(List.of(
                 new ToolHead(60, -2.8f, tier(context, ModulaTiers.WOOD), 1.0F),
-                new ToolHandle(0.0f),
-                new ToolHilt(0.0f)
+                new ToolHandle(1.0f),
+                new ToolHilt(1.0f)
         )));
         register(context, STONE, new MaterialInfo(TextColor.fromRgb(0x7f7f7f), "stone"), new MaterialStats(List.of(
                 new ToolHead(131, -2.8f, tier(context, ModulaTiers.STONE), 1.0F),
@@ -64,6 +65,9 @@ public class ModulaMaterials {
                 new ToolHead(2031, -2.8f, tier(context, ModulaTiers.NETHERITE), 1.0F),
                 new ToolHilt(0.5f)
         )));
+        register(context, NETHER_WOOD, new MaterialInfo(TextColor.fromRgb(0x603432), "nether_wood"), new MaterialStats(List.of(
+                new ToolHandle(1.2f)
+        )));
     }
 
     private static Holder<SerializableTier> tier(BootstrapContext<ToolMaterial> ctx, ResourceKey<SerializableTier> key) {
@@ -84,7 +88,7 @@ public class ModulaMaterials {
         registerMaterials(context);
     }
 
-    public static Collection<ResourceKey<ToolMaterial>> getMaterials() {
+    public static List<ResourceKey<ToolMaterial>> getMaterials() {
         return materials;
     }
 }

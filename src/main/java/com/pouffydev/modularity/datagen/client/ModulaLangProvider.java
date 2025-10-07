@@ -1,9 +1,14 @@
 package com.pouffydev.modularity.datagen.client;
 
+import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.material.ToolMaterial;
+import com.pouffydev.modularity.api.material.parts.ToolPartType;
+import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.registry.ModulaCreativeTab;
 import com.pouffydev.modularity.common.registry.ModulaItems;
+import com.pouffydev.modularity.common.registry.ModulaToolParts;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
+import com.pouffydev.modularity.common.registry.bootstrap.ModulaTiers;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -11,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -35,12 +41,58 @@ public class ModulaLangProvider extends LanguageProvider {
             this.item(registry);
         }
 
+        for (DeferredHolder< ToolPartType<?>, ? extends ToolPartType<?>> registry : ModulaToolParts.TOOL_PARTS.getEntries()) {
+            this.add(registry, "tool_part_type");
+        }
+
         this.tab(ModulaCreativeTab.MODULARITY);
 
-        for (ResourceKey<ToolMaterial> key : ModulaMaterials.getMaterials()) {
-            String name = transform(key.location().getPath());
-            super.add(key.location().toLanguageKey("tool_material"), name);
-        }
+        material(ModulaMaterials.WOOD);
+        material(ModulaMaterials.STONE);
+        material(ModulaMaterials.IRON);
+        material(ModulaMaterials.DIAMOND);
+        material(ModulaMaterials.GOLD);
+        material(ModulaMaterials.NETHERITE);
+        material(ModulaMaterials.NETHER_WOOD);
+        material(ModulaMaterials.UNKNOWN);
+
+        tier(ModulaTiers.WOOD);
+        tier(ModulaTiers.STONE);
+        tier(ModulaTiers.IRON);
+        tier(ModulaTiers.DIAMOND);
+        tier(ModulaTiers.GOLD);
+        tier(ModulaTiers.NETHERITE);
+
+        string("modularity.tooltip.keyShift", "Shift");
+        string("modularity.tooltip.holdForStats", "Hold [%1$s] for Stats");
+
+        statsTooltip("durability");
+        statsTooltip("mining_speed");
+        statsTooltip("attack_damage");
+        statsTooltip("attack_speed");
+        statsTooltip("enchantability");
+        statsTooltip("tier");
+    }
+
+    private void statsTooltip(String type) {
+        String name = transform(type);
+        string("modularity.tooltip.stat."+type, name+": %s");
+        string("modularity.tooltip.stat."+type+".add", "+%s "+name);
+        string("modularity.tooltip.stat."+type+".subtract", "-%s "+name);
+    }
+
+    private void material(ResourceKey<ToolMaterial> key) {
+        String name = transform(key.location().getPath());
+        material(key, name);
+    }
+
+    private void material(ResourceKey<ToolMaterial> key, String name) {
+        super.add(key.location().toLanguageKey("tool_material"), name);
+    }
+
+    private void tier(ResourceKey<SerializableTier> key) {
+        String name = transform(key.location().getPath());
+        super.add(key.location().toLanguageKey("tool_tier"), name);
     }
 
     private void tab(Holder<CreativeModeTab> tabHolder) {
@@ -53,6 +105,10 @@ public class ModulaLangProvider extends LanguageProvider {
 
     private void item(Holder<Item> itemHolder) {
         this.add(itemHolder, "item");
+    }
+
+    private void string(String key, String value) {
+        super.add(key, value);
     }
 
     private void add(Holder<?> holder, String type) {
