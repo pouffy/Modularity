@@ -3,6 +3,7 @@ package com.pouffydev.modularity.api.tool;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.common.tools.parts.ToolHead;
 import com.pouffydev.modularity.common.util.ModularityCodecs;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -14,6 +15,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
 public record SerializableTier(TagKey<Block> incorrectBlocksForDrops, int uses, float speed, float attackDamageBonus, int enchantmentValue, Ingredient repairIngredient) implements Tier {
+
+    public static SerializableTier EMPTY = new SerializableTier(null, 0, 0f, 0f, 0, Ingredient.EMPTY);
 
     public static final Codec<SerializableTier> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(

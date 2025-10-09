@@ -7,7 +7,7 @@ import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.common.RegistryHelper;
 import com.pouffydev.modularity.common.tools.parts.ToolHandle;
 import com.pouffydev.modularity.common.tools.parts.ToolHead;
-import com.pouffydev.modularity.common.tools.parts.ToolHilt;
+import com.pouffydev.modularity.common.tools.parts.ToolGuard;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -16,7 +16,7 @@ public class ModulaToolParts {
 
     public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHead>> HEAD = register("head", ToolHead.CODEC);
     public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHandle>> HANDLE = register("handle", ToolHandle.CODEC);
-    public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolHilt>> HILT = register("hilt", ToolHilt.CODEC);
+    public static final DeferredHolder<ToolPartType<?>, ToolPartType<ToolGuard>> GUARD = register("guard", ToolGuard.CODEC);
 
     public static <T extends IToolPart> DeferredHolder<ToolPartType<?>, ToolPartType<T>> register(String name, MapCodec<T> codec) {
         return TOOL_PARTS.register(name, () -> new ToolPartType<>(codec));

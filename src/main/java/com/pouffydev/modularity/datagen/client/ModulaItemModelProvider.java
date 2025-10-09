@@ -1,9 +1,7 @@
 package com.pouffydev.modularity.datagen.client;
 
 import com.pouffydev.modularity.api.material.item.IMaterialItem;
-import com.pouffydev.modularity.api.material.item.MaterialItem;
 import com.pouffydev.modularity.api.tool.ModularItem;
-import com.pouffydev.modularity.api.tool.part.ToolPartItem;
 import com.pouffydev.modularity.client.render.MaterialLoaderBuilder;
 import com.pouffydev.modularity.client.render.ModularLoaderBuilder;
 import com.pouffydev.modularity.common.registry.ModulaItems;
@@ -51,10 +49,13 @@ public class ModulaItemModelProvider extends LodestoneItemModelProvider {
         material(ModulaItems.SHOVEL_HEAD, "parts/shovel_head", new Vec2(0, 0));
         material(ModulaItems.HOE_HEAD, "parts/hoe_head", new Vec2(0, 0));
         material(ModulaItems.SWORD_BLADE, "parts/sword_blade", new Vec2(0, 0));
-        material(ModulaItems.HILT, "parts/hilt", new Vec2(0, 0));
+        material(ModulaItems.GUARD, "parts/guard", new Vec2(0, 0));
 
         modular(ModulaItems.SWORD);
         modular(ModulaItems.PICKAXE);
+        modular(ModulaItems.AXE);
+        modular(ModulaItems.SHOVEL);
+        modular(ModulaItems.HOE);
     }
 
     private void basicItem(Supplier<? extends Item> item) {

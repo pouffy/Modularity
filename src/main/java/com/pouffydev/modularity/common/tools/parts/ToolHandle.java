@@ -7,16 +7,20 @@ import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.parts.IToolPart;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import net.minecraft.ChatFormatting;
+import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
+import com.pouffydev.modularity.common.util.TooltipUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 
 import java.util.function.Consumer;
 
-public record ToolHandle(float durabilityMultiplier) implements IToolPart {
+public record ToolHandle(float durability, float miningSpeed, float meleeSpeed, float attackDamage) implements IToolPart {
     public static final MapCodec<ToolHandle> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
-                    Codec.FLOAT.fieldOf("durability").forGetter(ToolHandle::durabilityMultiplier)
+                    Codec.FLOAT.optionalFieldOf("durability", 0f).forGetter(ToolHandle::durability),
+                    Codec.FLOAT.optionalFieldOf("mining_speed", 0f).forGetter(ToolHandle::miningSpeed),
+                    Codec.FLOAT.optionalFieldOf("melee_speed", 0f).forGetter(ToolHandle::meleeSpeed),
+                    Codec.FLOAT.optionalFieldOf("attack_damage", 0f).forGetter(ToolHandle::attackDamage)
             ).apply(instance, ToolHandle::new));
 
     @Override
@@ -25,16 +29,15 @@ public record ToolHandle(float durabilityMultiplier) implements IToolPart {
     }
 
     @Override
-    public void statsTooltip(Holder<ToolMaterial> material, Consumer<Component> tooltipComponents, boolean advanced) {
-        String part = ModulaToolParts.HANDLE.getKey().location().toLanguageKey("tool_part_type");
-        tooltipComponents.accept(Component.translatable(part).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GRAY));
+    public void statsTooltip(Holder<ToolMaterial> material, Consumer<Component> tooltip, boolean advanced) {
+        tooltip.accept(TooltipUtils.part(material, ModulaToolParts.HANDLE));
         var materialStats = material.value().stats();
         if (!materialStats.supportsType(getType())) return;
         var handleStats = (ToolHandle) materialStats.getPartOfType(getType());
         if (handleStats == null) return;
-        String operator = handleStats.durabilityMultiplier() >= 0 ? "add" : "subtract";
-        String durabilityKey = "modularity.tooltip.stat.durability." + operator;
-        float durabilityModifier = handleStats.durabilityMultiplier() >= 0 ? handleStats.durabilityMultiplier() : -handleStats.durabilityMultiplier();
-        tooltipComponents.accept(Component.translatable(durabilityKey, durabilityModifier + "x").withStyle(ChatFormatting.DARK_GREEN));
+        tooltip.accept(TooltipUtils.indent(2, IPartStat.formatColoredPercentBoost("modularity.tooltip.stat.durability", handleStats.durability())));
+        tooltip.accept(TooltipUtils.indent(2, IPartStat.formatColoredPercentBoost("modularity.tooltip.stat.mining_speed", handleStats.miningSpeed())));
+        tooltip.accept(TooltipUtils.indent(2, IPartStat.formatColoredPercentBoost("modularity.tooltip.stat.attack_speed", handleStats.meleeSpeed())));
+        tooltip.accept(TooltipUtils.indent(2, IPartStat.formatColoredPercentBoost("modularity.tooltip.stat.attack_damage", handleStats.attackDamage())));
     }
 }

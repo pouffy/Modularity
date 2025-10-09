@@ -7,8 +7,8 @@ import com.pouffydev.modularity.api.tool.ModularItem;
 import com.pouffydev.modularity.api.tool.ModularPart;
 import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
 import com.pouffydev.modularity.common.tools.parts.ToolHead;
+import com.pouffydev.modularity.common.util.ToolHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -17,10 +17,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,20 +48,13 @@ public class ModularSwordItem extends ModularItem implements ITabFiller {
     }
 
     @Override
-    public void initializeAttributes(ItemStack stack) {
-        Holder<ToolMaterial> mainMaterial = this.getMainMaterial(stack);
-        if (mainMaterial == null) {
-            return;
-        }
-        ToolHead head = (ToolHead) mainMaterial.value().stats().getPartOfType(ModulaToolParts.HEAD.get());
-        if (head == null) {
-            return;
-        }
-        Tier tier = head.tier().value();
-        float attackDamage = head.attack();
-        float attackSpeed = head.miningSpeed();
-        ItemAttributeModifiers attributes = createAttributes(tier, attackDamage, attackSpeed);
-        stack.set(DataComponents.ATTRIBUTE_MODIFIERS, attributes);
+    public void initializeComponents(ItemStack stack) {
+        ToolHead head = ToolHelpers.getToolHead(stack);
+        Tier tier = ToolHelpers.getTier(stack);
+        float attackDamage = ToolHelpers.attackDamage(stack, 2);
+        float attackSpeed = ToolHelpers.attackSpeed(stack, -2.4F);
+        ToolHelpers.addAttributes(stack, createAttributes(tier, attackDamage, attackSpeed));
+        ToolHelpers.durability(stack, true);
     }
 
     @Override
@@ -78,45 +68,20 @@ public class ModularSwordItem extends ModularItem implements ITabFiller {
     }
 
     private void accept(Consumer<ItemStack> output, HolderLookup.Provider lookupProvider) {
-        addMaterials(output, lookupProvider);
+        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.HEAD.get(), ModulaToolParts.GUARD.get());
     }
 
     void addMaterials(Consumer<ItemStack> items, HolderLookup.Provider lookupProvider) {
         var materialLookup = lookupProvider.lookupOrThrow(ModularityRegistries.TOOL_MATERIAL);
         for (Holder<ToolMaterial> bladeMaterial : materialLookup.listElements().toList()) {
-            ModularPart blade = resolveBlade(bladeMaterial, materialLookup);
-            for (Holder<ToolMaterial> hiltMaterial : materialLookup.listElements().toList()) {
-                ModularPart hilt = resolveHilt(hiltMaterial, materialLookup);
-                for (Holder<ToolMaterial> handleMaterial : materialLookup.listElements().toList()) {
-                    ModularPart handle = resolveHandle(handleMaterial, materialLookup);
-                    ItemStack stack = new ItemStack(this);
-                    stack.set(ModulaDataComponents.MULTIPART, List.of(blade, handle, hilt));
-                    stack.set(ModulaDataComponents.REINIT_ATTRIBUTES, true);
-                    items.accept(stack.copy());
-                }
-            }
+            ModularPart blade = ToolHelpers.resolveForPart(bladeMaterial, materialLookup, ModulaToolParts.HEAD.get());
+            ModularPart hilt = ToolHelpers.resolveForPart(bladeMaterial, materialLookup, ModulaToolParts.GUARD.get());
+            Holder<ToolMaterial> handleMaterial = materialLookup.getOrThrow(ToolHelpers.tabHandleMaterial(bladeMaterial));
+            ModularPart handle = ToolHelpers.resolveForPart(handleMaterial, materialLookup, ModulaToolParts.HANDLE.get());
+            ItemStack stack = new ItemStack(this);
+            stack.set(ModulaDataComponents.MULTIPART, List.of(blade, handle, hilt));
+            stack.set(ModulaDataComponents.REINIT_ATTRIBUTES, true);
+            items.accept(stack.copy());
         }
-    }
-
-    ModularPart resolveBlade(Holder<ToolMaterial> material,  HolderLookup<ToolMaterial> materialLookup) {
-        var partMaterial = material;
-        if (!material.value().stats().supportsType(ModulaToolParts.HEAD.get())) {
-            partMaterial = materialLookup.getOrThrow(ModulaMaterials.WOOD);
-        }
-        return new ModularPart(ModulaToolParts.HEAD.get(), partMaterial);
-    }
-    ModularPart resolveHilt(Holder<ToolMaterial> material,  HolderLookup<ToolMaterial> materialLookup) {
-        var partMaterial = material;
-        if (!material.value().stats().supportsType(ModulaToolParts.HILT.get())) {
-            partMaterial = materialLookup.getOrThrow(ModulaMaterials.WOOD);
-        }
-        return new ModularPart(ModulaToolParts.HILT.get(), partMaterial);
-    }
-    ModularPart resolveHandle(Holder<ToolMaterial> material,  HolderLookup<ToolMaterial> materialLookup) {
-        var partMaterial = material;
-        if (!material.value().stats().supportsType(ModulaToolParts.HANDLE.get())) {
-            partMaterial = materialLookup.getOrThrow(ModulaMaterials.WOOD);
-        }
-        return new ModularPart(ModulaToolParts.HANDLE.get(), partMaterial);
     }
 }

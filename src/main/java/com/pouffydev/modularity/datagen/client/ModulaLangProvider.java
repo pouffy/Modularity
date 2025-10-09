@@ -65,6 +65,7 @@ public class ModulaLangProvider extends LanguageProvider {
 
         string("modularity.tooltip.keyShift", "Shift");
         string("modularity.tooltip.holdForStats", "Hold [%1$s] for Stats");
+        string("modularity.tooltip.holdForParts", "Hold [%1$s] for Parts");
 
         statsTooltip("durability");
         statsTooltip("mining_speed");
@@ -76,9 +77,7 @@ public class ModulaLangProvider extends LanguageProvider {
 
     private void statsTooltip(String type) {
         String name = transform(type);
-        string("modularity.tooltip.stat."+type, name+": %s");
-        string("modularity.tooltip.stat."+type+".add", "+%s "+name);
-        string("modularity.tooltip.stat."+type+".subtract", "-%s "+name);
+        string("modularity.tooltip.stat."+type, name+" ");
     }
 
     private void material(ResourceKey<ToolMaterial> key) {

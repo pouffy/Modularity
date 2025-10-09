@@ -8,15 +8,20 @@ import com.pouffydev.modularity.api.material.parts.IRepairableToolPart;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
+import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
+import com.pouffydev.modularity.common.util.TooltipUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.ExtraCodecs;
 
 import java.util.function.Consumer;
 
 public record ToolHead(int durability, float miningSpeed, Holder<SerializableTier> tier, float attack) implements IRepairableToolPart {
+
+    public static ToolHead EMPTY = new ToolHead(0, 0f, Holder.direct(SerializableTier.EMPTY), 0f);
 
     public static final MapCodec<ToolHead> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
@@ -32,30 +37,22 @@ public record ToolHead(int durability, float miningSpeed, Holder<SerializableTie
     }
 
     @Override
-    public void statsTooltip(Holder<ToolMaterial> material, Consumer<Component> tooltipComponents, boolean advanced) {
-        String part = ModulaToolParts.HEAD.getKey().location().toLanguageKey("tool_part_type");
-        tooltipComponents.accept(CommonComponents.space().append(Component.translatable(part).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GRAY)));
+    public void statsTooltip(Holder<ToolMaterial> material, Consumer<Component> tooltip, boolean advanced) {
+        tooltip.accept(TooltipUtils.part(material, ModulaToolParts.HEAD));
         var materialStats = material.value().stats();
         if (!materialStats.supportsType(getType())) return;
-        String durabilityKey = "modularity.tooltip.stat.durability";
-        String speedKey = "modularity.tooltip.stat.mining_speed";
-        String attackKey = "modularity.tooltip.stat.attack_damage";
         String tierKey = "modularity.tooltip.stat.tier";
         var headStats = (ToolHead) materialStats.getPartOfType(getType());
         if (headStats == null) return;
         SerializableTier tier = headStats.tier().value();
         String tierName = headStats.tier().getKey().location().toLanguageKey("tool_tier");
-        Component durability = Component.literal(String.valueOf(headStats.durability())).withStyle(ChatFormatting.BLUE);
-        Component speed = Component.literal(String.format("%.2f", headStats.miningSpeed() + tier.getSpeed())).withStyle(ChatFormatting.BLUE);
-        Component attack = Component.literal(String.format("%.2f", headStats.attack() + tier.getAttackDamageBonus())).withStyle(ChatFormatting.BLUE);
-        tooltipComponents.accept(CommonComponents.space().append(CommonComponents.space())
-                .append(Component.translatable(tierKey, Component.translatable(tierName).withStyle(ChatFormatting.BLUE)).withStyle(ChatFormatting.GRAY)));
-        tooltipComponents.accept(CommonComponents.space().append(CommonComponents.space())
-                .append(Component.translatable(durabilityKey, durability).withStyle(ChatFormatting.GRAY)));
-        tooltipComponents.accept(CommonComponents.space().append(CommonComponents.space())
-                .append(Component.translatable(speedKey, speed).withStyle(ChatFormatting.GRAY)));
-        tooltipComponents.accept(CommonComponents.space().append(CommonComponents.space())
-                .append(Component.translatable(attackKey, attack).withStyle(ChatFormatting.GRAY)));
+        Component durability = IPartStat.formatNumber("modularity.tooltip.stat.durability", TextColor.fromLegacyFormat(ChatFormatting.BLUE), headStats.durability());
+        Component speed = IPartStat.formatNumber("modularity.tooltip.stat.mining_speed", TextColor.fromLegacyFormat(ChatFormatting.BLUE), headStats.miningSpeed() + tier.getSpeed());
+        Component attack = IPartStat.formatNumber("modularity.tooltip.stat.attack_damage", TextColor.fromLegacyFormat(ChatFormatting.BLUE), headStats.attack() + tier.getAttackDamageBonus());
+        tooltip.accept(TooltipUtils.indent(2, Component.translatable(tierKey).append(Component.translatable(tierName).withStyle(ChatFormatting.BLUE))));
+        tooltip.accept(TooltipUtils.indent(2, durability));
+        tooltip.accept(TooltipUtils.indent(2, speed));
+        tooltip.accept(TooltipUtils.indent(2, attack));
     }
 
 

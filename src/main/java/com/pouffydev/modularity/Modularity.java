@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(Modularity.MODULARITY)
 public class Modularity {
+    //TODO: Better tool stat storage that doesn't rely on calls to the individual parts.
     private static Modularity INSTANCE;
 
     public static final Logger LOGGER = LogManager.getLogger();

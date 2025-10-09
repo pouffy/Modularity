@@ -1,10 +1,10 @@
 package com.pouffydev.modularity.api.tool;
 
 import com.pouffydev.modularity.api.material.ToolMaterial;
-import com.pouffydev.modularity.api.material.item.IMaterialItem;
 import com.pouffydev.modularity.api.material.parts.IToolPart;
 import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaItemAbilities;
+import com.pouffydev.modularity.common.util.TooltipUtils;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -30,7 +30,8 @@ public class ModularItem extends TieredItem {
     }
 
     public ModularItem(Properties properties, int maxStackSize) {
-        super(EmptyTier.INSTANCE, properties);
+        // By default, we want to reinitialize the attributes when loading the items
+        super(EmptyTier.INSTANCE, properties.component(ModulaDataComponents.REINIT_ATTRIBUTES, true));
         this.maxStackSize = maxStackSize;
     }
 
@@ -51,7 +52,7 @@ public class ModularItem extends TieredItem {
         return Component.literal(getItemName(stack));
     }
 
-    public Holder<ToolMaterial> getMainMaterial(ItemStack stack) {
+    public static Holder<ToolMaterial> getMainMaterial(ItemStack stack) {
         var comp = getPartsFromStack(stack);
         if (comp != null) {
             for (ModularPart part : comp) {
@@ -63,6 +64,19 @@ public class ModularItem extends TieredItem {
             }
         }
         return null;
+    }
+
+    public static boolean partsMatch(ItemStack stack1, ItemStack stack2) {
+        List<ModularPart> parts1 = getPartsFromStack(stack1);
+        List<ModularPart> parts2 = getPartsFromStack(stack2);
+        if (parts1 == null || parts2 == null) return false;
+        if (parts1.size() != parts2.size()) return false;
+        for (int i = 0; i < parts1.size(); i++) {
+            ModularPart part1 = parts1.get(i);
+            ModularPart part2 = parts2.get(i);
+            if (!part1.equals(part2)) return false;
+        }
+        return true;
     }
 
     public static List<ModularPart> getPartsFromStack(ItemStack stack) {
@@ -109,11 +123,16 @@ public class ModularItem extends TieredItem {
     @Override
     public void verifyComponentsAfterLoad(ItemStack stack) {
         if (!stack.has(DataComponents.ATTRIBUTE_MODIFIERS) || stack.has(ModulaDataComponents.REINIT_ATTRIBUTES)) {
-            initializeAttributes(stack);
+            initializeComponents(stack);
         }
     }
 
-    public void initializeAttributes(ItemStack stack) {
+    /**
+     * Initialize the data components of the item.
+     * Used for setting the attributes of the item based on its parts.
+     * @param stack The item stack to initialize.
+     */
+    public void initializeComponents(ItemStack stack) {
         stack.remove(ModulaDataComponents.REINIT_ATTRIBUTES);
     }
 
@@ -146,5 +165,11 @@ public class ModularItem extends TieredItem {
 
     public static BlockHitResult blockRayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode) {
         return Item.getPlayerPOVHitResult(worldIn, player, fluidMode);
+    }
+
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        Holder<ToolMaterial> mainMaterial = getMainMaterial(stack);
+        TooltipUtils.material(mainMaterial, tooltipComponents::add, tooltipFlag.isAdvanced());
+        TooltipUtils.modularStats(getParts(stack), tooltipComponents::add, tooltipFlag);
     }
 }

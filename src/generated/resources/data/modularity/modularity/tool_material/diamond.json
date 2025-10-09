@@ -13,8 +13,8 @@
         "tier": "modularity:diamond"
       },
       {
-        "type": "modularity:hilt",
-        "speed": 0.1
+        "type": "modularity:guard",
+        "speed": -0.45
       }
     ]
   }

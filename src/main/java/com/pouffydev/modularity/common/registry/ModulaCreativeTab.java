@@ -28,7 +28,7 @@ public class ModulaCreativeTab {
                     continue;
                 output.accept(registry.get());
             }
-        }, builder -> builder.withTabsBefore(CreativeModeTabs.COMBAT));
+        }, builder -> builder.withTabsBefore(CreativeModeTabs.SPAWN_EGGS));
     }
 
     private static DeferredHolder<CreativeModeTab, CreativeModeTab> registerTabSearchBar(String name, Holder<Item> icon, BiConsumer<CreativeModeTab.ItemDisplayParameters, CreativeModeTab.Output> displayItems, Consumer<CreativeModeTab.Builder> additionalProperties) {

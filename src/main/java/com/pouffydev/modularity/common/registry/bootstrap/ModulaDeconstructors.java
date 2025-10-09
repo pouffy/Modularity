@@ -4,7 +4,6 @@ import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.assembly.deconstruction.ToolDeconstructor;
 import com.pouffydev.modularity.api.material.ToolMaterial;
-import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.registry.ModulaItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -114,7 +113,7 @@ public class ModulaDeconstructors {
     private static ToolDeconstructor.ToolEntry sword(BootstrapContext<ToolDeconstructor> ctx, Item tool, ResourceKey<ToolMaterial> blade, ResourceKey<ToolMaterial> hilt, ResourceKey<ToolMaterial> handle) {
         return new ToolDeconstructor.ToolEntry(tool, List.of(
                 new ToolDeconstructor.PartEntry(ModulaItems.SWORD_BLADE.asItem(), material(ctx, blade)),
-                new ToolDeconstructor.PartEntry(ModulaItems.HILT.asItem(), material(ctx, hilt)),
+                new ToolDeconstructor.PartEntry(ModulaItems.GUARD.asItem(), material(ctx, hilt)),
                 new ToolDeconstructor.PartEntry(ModulaItems.TOOL_HANDLE.asItem(), material(ctx, handle))
         ));
     }

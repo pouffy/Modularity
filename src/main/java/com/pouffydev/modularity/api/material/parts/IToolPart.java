@@ -5,6 +5,7 @@ import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Tier;
 
 import java.util.function.Consumer;
 

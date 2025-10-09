@@ -13,8 +13,8 @@
         "tier": "modularity:gold"
       },
       {
-        "type": "modularity:hilt",
-        "speed": -0.4
+        "type": "modularity:guard",
+        "speed": 0.25
       }
     ]
   }

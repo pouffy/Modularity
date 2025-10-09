@@ -13,8 +13,8 @@
         "tier": "modularity:iron"
       },
       {
-        "type": "modularity:hilt",
-        "speed": 0.3
+        "type": "modularity:guard",
+        "speed": -0.3
       }
     ]
   }
