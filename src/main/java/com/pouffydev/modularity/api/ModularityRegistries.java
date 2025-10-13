@@ -10,6 +10,7 @@ import com.pouffydev.modularity.common.registry.bootstrap.ModulaDeconstructors;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaTiers;
 import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
+import com.pouffydev.modularity.common.tools.parts.stat.PartStatType;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -26,7 +27,7 @@ public class ModularityRegistries {
 
 
     public static final Registry<ToolPartType<?>> TOOL_PART_TYPE_REGISTRY = makeSyncedRegistry(TOOL_PART_TYPE);
-    public static final Registry<IPartStat<?>> PART_STAT_REGISTRY = registerSimpleWithIntrusiveHolders(PART_STAT);
+    public static final Registry<IPartStat<?>> PART_STAT_REGISTRY = makeSyncedRegistry(PART_STAT);
 
 
     private static <T> ResourceKey<Registry<T>> createRegistryKey(String name) {

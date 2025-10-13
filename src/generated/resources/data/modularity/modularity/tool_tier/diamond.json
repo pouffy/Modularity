@@ -5,6 +5,14 @@
   "repair": {
     "tag": "c:gems/diamond"
   },
+  "sorting": {
+    "afters": [
+      "modularity:netherite"
+    ],
+    "befores": [
+      "modularity:iron"
+    ]
+  },
   "speed": 8.0,
   "uses": 1561
 }

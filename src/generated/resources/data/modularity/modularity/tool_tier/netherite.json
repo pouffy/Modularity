@@ -5,6 +5,12 @@
   "repair": {
     "tag": "c:ingots/netherite"
   },
+  "sorting": {
+    "afters": [],
+    "befores": [
+      "modularity:diamond"
+    ]
+  },
   "speed": 9.0,
   "uses": 2031
 }

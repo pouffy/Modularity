@@ -7,8 +7,8 @@ import com.pouffydev.modularity.common.registry.ModulaItemAbilities;
 import com.pouffydev.modularity.common.util.TooltipUtils;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +31,7 @@ public class ModularItem extends TieredItem {
 
     public ModularItem(Properties properties, int maxStackSize) {
         // By default, we want to reinitialize the attributes when loading the items
-        super(EmptyTier.INSTANCE, properties.component(ModulaDataComponents.REINIT_ATTRIBUTES, true));
+        super(EmptyTier.INSTANCE, properties.component(ModulaDataComponents.REINIT_COMPONENTS, true));
         this.maxStackSize = maxStackSize;
     }
 
@@ -83,11 +83,11 @@ public class ModularItem extends TieredItem {
         if (stack.getItem() instanceof ModularItem modularItem) {
             return modularItem.getParts(stack);
         }
-        return null;
+        return List.of();
     }
 
     public List<ModularPart> getParts(ItemStack stack) {
-        if (!stack.has(ModulaDataComponents.MULTIPART)) return null;
+        if (!stack.has(ModulaDataComponents.MULTIPART)) return List.of();
         return stack.get(ModulaDataComponents.MULTIPART);
     }
 
@@ -120,9 +120,8 @@ public class ModularItem extends TieredItem {
         return false;
     }
 
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack stack) {
-        if (!stack.has(DataComponents.ATTRIBUTE_MODIFIERS) || stack.has(ModulaDataComponents.REINIT_ATTRIBUTES)) {
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        if (stack.has(ModulaDataComponents.REINIT_COMPONENTS)) {
             initializeComponents(stack);
         }
     }
@@ -133,7 +132,7 @@ public class ModularItem extends TieredItem {
      * @param stack The item stack to initialize.
      */
     public void initializeComponents(ItemStack stack) {
-        stack.remove(ModulaDataComponents.REINIT_ATTRIBUTES);
+        stack.remove(ModulaDataComponents.REINIT_COMPONENTS);
     }
 
     @Override

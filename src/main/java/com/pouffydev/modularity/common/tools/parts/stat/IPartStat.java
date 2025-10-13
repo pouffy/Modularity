@@ -2,7 +2,12 @@ package com.pouffydev.modularity.common.tools.parts.stat;
 
 import com.mojang.serialization.Codec;
 import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.api.material.parts.IToolPart;
+import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.common.util.TooltipUtils;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
@@ -29,12 +34,13 @@ public interface IPartStat<T> {
         return true;
     }
 
-    @Nullable
-    T read(ItemStack stack);
+    T read(Tag tag);
 
-    void write(ItemStack stack, T value);
+    Tag write(T value);
 
-    Codec<T> codec();
+    T fromNetwork(FriendlyByteBuf buffer);
+
+    void toNetwork(FriendlyByteBuf buffer, T value);
 
     default String getTranslationKey() {
         return getName().toLanguageKey("tool_stat");
@@ -49,6 +55,8 @@ public interface IPartStat<T> {
     }
 
     Component formatValue(T value);
+
+    T modify(IToolPart.ModifyType modifyType, T original, T value);
 
     static Component formatNumber(String loc, TextColor color, int number) {
         return formatNumber(loc, color, (float) number);

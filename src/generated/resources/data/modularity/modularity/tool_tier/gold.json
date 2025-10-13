@@ -5,6 +5,14 @@
   "repair": {
     "tag": "c:ingots/gold"
   },
+  "sorting": {
+    "afters": [
+      "modularity:stone"
+    ],
+    "befores": [
+      "modularity:wood"
+    ]
+  },
   "speed": 12.0,
   "uses": 32
 }

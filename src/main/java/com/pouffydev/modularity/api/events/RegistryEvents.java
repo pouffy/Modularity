@@ -1,12 +1,15 @@
 package com.pouffydev.modularity.api.events;
 
 import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.api.tier.TierSortingRegistry;
 import com.pouffydev.modularity.api.assembly.deconstruction.ToolDeconstructor;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.tool.SerializableTier;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 public class RegistryEvents {
 
@@ -20,5 +23,18 @@ public class RegistryEvents {
     @SubscribeEvent
     public void newRegistry(NewRegistryEvent event) {
         event.register(ModularityRegistries.TOOL_PART_TYPE_REGISTRY);
+        event.register(ModularityRegistries.PART_STAT_REGISTRY);
     }
+
+    @SubscribeEvent
+    public void onRegisterLate(RegisterEvent event) {
+        if (event.getRegistryKey() == ModularityRegistries.TOOL_TIER) {
+            var tierReg = event.getRegistry(ModularityRegistries.TOOL_TIER);
+            if (tierReg == null) return;
+            // Sort datapack generated tiers
+            tierReg.forEach(tier -> tier.sort(tierReg.getKey(tier)));
+        }
+    }
+
+
 }

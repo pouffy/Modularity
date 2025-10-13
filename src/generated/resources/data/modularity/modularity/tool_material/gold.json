@@ -10,7 +10,7 @@
         "attack": 1.0,
         "durability": 32,
         "speed": -2.8,
-        "tier": "modularity:gold"
+        "tier": "minecraft:gold"
       },
       {
         "type": "modularity:guard",

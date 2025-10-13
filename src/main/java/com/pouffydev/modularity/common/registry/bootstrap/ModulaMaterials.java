@@ -15,6 +15,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Tiers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,28 +41,28 @@ public class ModulaMaterials {
     private static void registerMaterials(BootstrapContext<ToolMaterial> context) {
         register(context, UNKNOWN, new MaterialInfo(TextColor.fromRgb(0xd23de5), "unknown"), new MaterialStats(List.of()));
         register(context, WOOD, new MaterialInfo(TextColor.fromRgb(0x5e4719), "wood"), new MaterialStats(List.of(
-                new ToolHead(60, -2.8f, tier(context, ModulaTiers.WOOD), 1.0F),
+                new ToolHead(60, -2.8f, Tiers.WOOD, 1.0F),
                 new ToolHandle(0f, 0f, 0f, 0f),
                 new ToolGuard(0.15f)
         )));
         register(context, STONE, new MaterialInfo(TextColor.fromRgb(0x7f7f7f), "stone"), new MaterialStats(List.of(
-                new ToolHead(131, -2.8f, tier(context, ModulaTiers.STONE), 1.0F),
+                new ToolHead(131, -2.8f, Tiers.STONE, 1.0F),
                 new ToolGuard(-0.15f)
         )));
         register(context, IRON, new MaterialInfo(TextColor.fromRgb(0xc1c1c1), "iron"), new MaterialStats(List.of(
-                new ToolHead(250, -2.8f, tier(context, ModulaTiers.IRON), 1.0F),
+                new ToolHead(250, -2.8f, Tiers.IRON, 1.0F),
                 new ToolGuard(-0.3f)
         )));
         register(context, DIAMOND, new MaterialInfo(TextColor.fromRgb(0x2be0d8), "diamond"), new MaterialStats(List.of(
-                new ToolHead(1561, -2.8f, tier(context, ModulaTiers.DIAMOND), 1.0F),
+                new ToolHead(1561, -2.8f, Tiers.DIAMOND, 1.0F),
                 new ToolGuard(-0.45f)
         )));
         register(context, GOLD, new MaterialInfo(TextColor.fromRgb(0xfad64a), "gold"), new MaterialStats(List.of(
-                new ToolHead(32, -2.8f, tier(context, ModulaTiers.GOLD), 1.0F),
+                new ToolHead(32, -2.8f, Tiers.GOLD, 1.0F),
                 new ToolGuard(0.25f)
         )));
         register(context, NETHERITE, new MaterialInfo(TextColor.fromRgb(0x5d565d), "netherite"), new MaterialStats(List.of(
-                new ToolHead(2031, -2.8f, tier(context, ModulaTiers.NETHERITE), 1.0F),
+                new ToolHead(2031, -2.8f, Tiers.NETHERITE, 1.0F),
                 new ToolGuard(-0.5f)
         )));
         register(context, NETHER_WOOD, new MaterialInfo(TextColor.fromRgb(0x603432), "nether_wood"), new MaterialStats(List.of(
@@ -69,10 +70,10 @@ public class ModulaMaterials {
         )));
     }
 
-    private static Holder<SerializableTier> tier(BootstrapContext<ToolMaterial> ctx, ResourceKey<SerializableTier> key) {
+    private static SerializableTier tier(BootstrapContext<ToolMaterial> ctx, ResourceKey<SerializableTier> key) {
         HolderGetter<SerializableTier> tierLookup = ctx.lookup(ModularityRegistries.TOOL_TIER);
         Optional<Holder.Reference<SerializableTier>> tierReference = tierLookup.get(key);
-        return tierReference.orElse(null);
+        return tierReference.map(Holder.Reference::value).orElseGet(() -> SerializableTier.EMPTY);
     }
 
     private static final List<ResourceKey<ToolMaterial>> materials = new ArrayList<>();

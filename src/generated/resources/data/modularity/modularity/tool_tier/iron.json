@@ -5,6 +5,14 @@
   "repair": {
     "tag": "c:ingots/iron"
   },
+  "sorting": {
+    "afters": [
+      "modularity:diamond"
+    ],
+    "befores": [
+      "modularity:stone"
+    ]
+  },
   "speed": 6.0,
   "uses": 250
 }

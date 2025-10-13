@@ -14,13 +14,13 @@ public class DamageablePartItem extends ToolPartItem {
 
     @Override
     public void verifyComponentsAfterLoad(ItemStack stack) {
-        if (stack.has(ModulaDataComponents.REINIT_ATTRIBUTES)) {
+        if (stack.has(ModulaDataComponents.REINIT_COMPONENTS)) {
             initializeComponents(stack);
         }
     }
 
     public void initializeComponents(ItemStack stack) {
-        stack.remove(ModulaDataComponents.REINIT_ATTRIBUTES);
+        stack.remove(ModulaDataComponents.REINIT_COMPONENTS);
         ToolHelpers.durability(stack, true);
     }
 }

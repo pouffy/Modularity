@@ -55,13 +55,8 @@ public class ModularPickaxeItem extends ModularItem implements ITabFiller {
 
     @Override
     public void initializeComponents(ItemStack stack) {
-        ToolHead head = ToolHelpers.getToolHead(stack);
-        Tier tier = ToolHelpers.getTier(stack);
-        float attackDamage = ToolHelpers.attackDamage(stack, 0);
-        float attackSpeed = ToolHelpers.attackSpeed(stack, -2.8F);
-        ToolHelpers.addAttributes(stack, createAttributes(tier, attackDamage, attackSpeed));
-        ToolHelpers.simpleTool(stack, BlockTags.MINEABLE_WITH_PICKAXE);
-        ToolHelpers.durability(stack, true);
+        ToolHelpers.initCommonComponents(stack,
+                ModularPickaxeItem::createAttributes, 1.0F, -2.8F, BlockTags.MINEABLE_WITH_PICKAXE);
     }
 
     @Override

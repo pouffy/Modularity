@@ -79,13 +79,8 @@ public class ModularShovelItem extends ModularItem implements ITabFiller {
 
     @Override
     public void initializeComponents(ItemStack stack) {
-        ToolHead head = ToolHelpers.getToolHead(stack);
-        Tier tier = ToolHelpers.getTier(stack);
-        float attackDamage = ToolHelpers.attackDamage(stack, 0.5F);
-        float attackSpeed = ToolHelpers.attackSpeed(stack, -3.0F);
-        ToolHelpers.addAttributes(stack, createAttributes(tier, attackDamage, attackSpeed));
-        ToolHelpers.simpleTool(stack, BlockTags.MINEABLE_WITH_SHOVEL);
-        ToolHelpers.durability(stack, true);
+        ToolHelpers.initCommonComponents(stack,
+                ModularShovelItem::createAttributes, 1.5F, -3.0F, BlockTags.MINEABLE_WITH_SHOVEL);
     }
 
     @Override

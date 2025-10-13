@@ -2,21 +2,32 @@ package com.pouffydev.modularity.api.tool;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.codecs.SimpleMapCodec;
 import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
+import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 
 import java.util.List;
 import java.util.Objects;
 
 public record ModularPart(ToolPartType<?> type, Holder<ToolMaterial> material) {
+    public static final SimpleMapCodec<ToolPartType<?>, Holder<ToolMaterial>> FIELD_CODEC = Codec.simpleMap(
+            ModularityRegistries.TOOL_PART_TYPE_REGISTRY.byNameCodec(),
+            ToolMaterial.CODEC,
+            ModularityRegistries.TOOL_PART_TYPE_REGISTRY
+    );
+
     public static final Codec<ModularPart> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ModularityRegistries.TOOL_PART_TYPE_REGISTRY.byNameCodec().fieldOf("part").forGetter(ModularPart::type),

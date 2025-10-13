@@ -5,6 +5,14 @@
   "repair": {
     "tag": "minecraft:stone_tool_materials"
   },
+  "sorting": {
+    "afters": [
+      "modularity:iron"
+    ],
+    "befores": [
+      "modularity:wood"
+    ]
+  },
   "speed": 4.0,
   "uses": 131
 }

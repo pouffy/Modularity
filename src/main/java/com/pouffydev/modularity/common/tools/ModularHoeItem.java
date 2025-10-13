@@ -78,13 +78,8 @@ public class ModularHoeItem extends ModularItem implements ITabFiller {
 
     @Override
     public void initializeComponents(ItemStack stack) {
-        ToolHead head = ToolHelpers.getToolHead(stack);
-        Tier tier = ToolHelpers.getTier(stack);
-        float attackDamage = ToolHelpers.attackDamage(stack, -1);
-        float attackSpeed = ToolHelpers.attackSpeed(stack, -3.0F);
-        ToolHelpers.addAttributes(stack, createAttributes(tier, attackDamage, attackSpeed));
-        ToolHelpers.simpleTool(stack, BlockTags.MINEABLE_WITH_HOE);
-        ToolHelpers.durability(stack, true);
+        ToolHelpers.initCommonComponents(stack,
+                ModularHoeItem::createAttributes, -1F, -4F, BlockTags.MINEABLE_WITH_HOE);
     }
 
     @Override

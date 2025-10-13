@@ -1,6 +1,7 @@
 package com.pouffydev.modularity;
 
 import com.pouffydev.modularity.api.events.CapabilityEvents;
+import com.pouffydev.modularity.api.events.CommonEvents;
 import com.pouffydev.modularity.api.events.PlayerEvents;
 import com.pouffydev.modularity.api.events.RegistryEvents;
 import net.neoforged.bus.api.IEventBus;
@@ -21,7 +22,7 @@ public class ModularityEventHandler {
 
     public void registerForgeEvents(IEventBus eventBus) {
         eventBus.register(new PlayerEvents());
-        //eventBus.register(new ClientEvents());
+        eventBus.register(new CommonEvents());
         //eventBus.register(new EntityEvents());
     }
 

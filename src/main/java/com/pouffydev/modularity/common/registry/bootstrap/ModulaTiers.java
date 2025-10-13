@@ -37,19 +37,19 @@ public class ModulaTiers {
     private static void registerTiers(BootstrapContext<SerializableTier> context) {
         register(context, builder(WOOD, Ingredient.of(ItemTags.PLANKS)));
         register(context, builder(STONE, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS))
-                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_STONE_TOOL)
+                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_STONE_TOOL).sorting(List.of(WOOD.location()), List.of(IRON.location()))
                 .uses(131).speed(4.0F).damage(1.0F).enchantability(5));
         register(context, builder(IRON, Ingredient.of(Tags.Items.INGOTS_IRON))
-                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_IRON_TOOL)
+                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_IRON_TOOL).sorting(List.of(STONE.location()), List.of(DIAMOND.location()))
                 .uses(250).speed(6.0F).damage(2.0F).enchantability(14));
         register(context, builder(DIAMOND, Ingredient.of(Tags.Items.GEMS_DIAMOND))
-                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)
+                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_DIAMOND_TOOL).sorting(List.of(IRON.location()), List.of(NETHERITE.location()))
                 .uses(1561).speed(8.0F).damage(3.0F).enchantability(10));
         register(context, builder(GOLD, Ingredient.of(Tags.Items.INGOTS_GOLD))
-                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_GOLD_TOOL)
+                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_GOLD_TOOL).sorting(List.of(WOOD.location()), List.of(STONE.location()))
                 .uses(32).speed(12.0F).enchantability(22));
         register(context, builder(NETHERITE, Ingredient.of(Tags.Items.INGOTS_NETHERITE))
-                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
+                .incorrectToolForDrops(BlockTags.INCORRECT_FOR_NETHERITE_TOOL).sorting(List.of(DIAMOND.location()), List.of())
                 .uses(2031).speed(9.0F).damage(4.0F));
     }
 
@@ -72,6 +72,7 @@ public class ModulaTiers {
         private float speed = 2.0F;
         private float damage = 0.0F;
         private int enchantability = 15;
+        private SerializableTier.Sorting sorting = SerializableTier.Sorting.EMPTY;
 
         public Builder(ResourceKey<SerializableTier> key, Ingredient ingredient) {
             this.key = key;
@@ -106,8 +107,14 @@ public class ModulaTiers {
             this.enchantability = enchantability;
             return this;
         }
+
+        public Builder sorting(List<ResourceLocation> befores, List<ResourceLocation> afters) {
+            this.sorting = new SerializableTier.Sorting(befores, afters);
+            return this;
+        }
+
         public SerializableTier build() {
-            return new SerializableTier(incorrectToolForDrops, uses, speed, damage, enchantability, ingredient);
+            return new SerializableTier(incorrectToolForDrops, uses, speed, damage, enchantability, ingredient, sorting);
         }
     }
 

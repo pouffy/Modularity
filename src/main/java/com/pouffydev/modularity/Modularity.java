@@ -1,9 +1,7 @@
 package com.pouffydev.modularity;
 
-import com.pouffydev.modularity.common.registry.ModulaCreativeTab;
-import com.pouffydev.modularity.common.registry.ModulaDataComponents;
-import com.pouffydev.modularity.common.registry.ModulaItems;
-import com.pouffydev.modularity.common.registry.ModulaToolParts;
+import com.pouffydev.modularity.api.tier.TierSortingRegistry;
+import com.pouffydev.modularity.common.registry.*;
 import com.pouffydev.modularity.datagen.ModulaDatagen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -29,6 +27,7 @@ public class Modularity {
     public Modularity(IEventBus modEventBus, ModContainer modContainer) {
         this.modEventBus = modEventBus;
         INSTANCE = this;
+        TierSortingRegistry.init(modEventBus);
         new ModularityEventHandler(modEventBus).register();
         onCtor(modEventBus, modContainer);
         this.modEventBus.addListener(ModulaDatagen::gatherDataEvent);
@@ -38,6 +37,7 @@ public class Modularity {
     public static void onCtor(IEventBus modEventBus, ModContainer modContainer) {
         ModulaDataComponents.staticInit();
         ModulaToolParts.staticInit();
+        ModulaPartStats.staticInit();
         ModulaItems.staticInit();
         ModulaCreativeTab.staticInit();
     }

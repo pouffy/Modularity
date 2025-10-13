@@ -10,7 +10,7 @@
         "attack": 1.0,
         "durability": 250,
         "speed": -2.8,
-        "tier": "modularity:iron"
+        "tier": "minecraft:iron"
       },
       {
         "type": "modularity:guard",

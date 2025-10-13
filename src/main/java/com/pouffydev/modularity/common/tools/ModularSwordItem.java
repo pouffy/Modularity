@@ -7,7 +7,6 @@ import com.pouffydev.modularity.api.tool.ModularItem;
 import com.pouffydev.modularity.api.tool.ModularPart;
 import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
 import com.pouffydev.modularity.common.util.ToolHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -49,12 +48,8 @@ public class ModularSwordItem extends ModularItem implements ITabFiller {
 
     @Override
     public void initializeComponents(ItemStack stack) {
-        ToolHead head = ToolHelpers.getToolHead(stack);
-        Tier tier = ToolHelpers.getTier(stack);
-        float attackDamage = ToolHelpers.attackDamage(stack, 2);
-        float attackSpeed = ToolHelpers.attackSpeed(stack, -2.4F);
-        ToolHelpers.addAttributes(stack, createAttributes(tier, attackDamage, attackSpeed));
-        ToolHelpers.durability(stack, true);
+        ToolHelpers.initCommonComponents(stack,
+                ModularSwordItem::createAttributes, 3, -2.4F, null);
     }
 
     @Override
@@ -80,7 +75,7 @@ public class ModularSwordItem extends ModularItem implements ITabFiller {
             ModularPart handle = ToolHelpers.resolveForPart(handleMaterial, materialLookup, ModulaToolParts.HANDLE.get());
             ItemStack stack = new ItemStack(this);
             stack.set(ModulaDataComponents.MULTIPART, List.of(blade, handle, hilt));
-            stack.set(ModulaDataComponents.REINIT_ATTRIBUTES, true);
+            stack.set(ModulaDataComponents.REINIT_COMPONENTS, true);
             items.accept(stack.copy());
         }
     }

@@ -10,7 +10,7 @@
         "attack": 1.0,
         "durability": 60,
         "speed": -2.8,
-        "tier": "modularity:wood"
+        "tier": "minecraft:wood"
       },
       {
         "type": "modularity:handle"

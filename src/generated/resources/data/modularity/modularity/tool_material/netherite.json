@@ -10,7 +10,7 @@
         "attack": 1.0,
         "durability": 2031,
         "speed": -2.8,
-        "tier": "modularity:netherite"
+        "tier": "minecraft:netherite"
       },
       {
         "type": "modularity:guard",

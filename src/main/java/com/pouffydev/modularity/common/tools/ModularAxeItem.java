@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.ItemAbilities;
@@ -102,14 +104,12 @@ public class ModularAxeItem extends ModularItem implements ITabFiller {
         return ItemAttributeModifiers.builder().add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, attackDamage + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build();
     }
 
+
+
     @Override
     public void initializeComponents(ItemStack stack) {
-        Tier tier = ToolHelpers.getTier(stack);
-        float attackDamage = ToolHelpers.attackDamage(stack, 6);
-        float attackSpeed = ToolHelpers.attackSpeed(stack, -3F);
-        ToolHelpers.addAttributes(stack, createAttributes(tier, attackDamage, attackSpeed));
-        ToolHelpers.simpleTool(stack, BlockTags.MINEABLE_WITH_AXE);
-        ToolHelpers.durability(stack, true);
+        ToolHelpers.initCommonComponents(stack,
+                ModularAxeItem::createAttributes, 6.0F, -3F, BlockTags.MINEABLE_WITH_AXE);
     }
 
     @Override
