@@ -1,33 +1,31 @@
 package com.pouffydev.modularity.common.tools.data;
 
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.pouffydev.modularity.api.material.parts.ToolPartType;
+import com.pouffydev.modularity.api.tool.ModularDefinition;
+import io.netty.buffer.ByteBuf;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
-public class ToolData {
+import java.util.Map;
 
-    private final Item item;
-    private CompoundTag nbt;
-    private int damage = -1;
+public record ToolData(Holder<ModularDefinition> definition, Map<String, ToolPartType<?>> parts) {
 
-    @Nullable
-    private StatsData stats;
+    public static final Codec<ToolData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ModularDefinition.CODEC.fieldOf("definition").forGetter(ToolData::definition),
+            Codec.unboundedMap(Codec.STRING, ToolPartType.CODEC)
+                    .validate((m) -> m.isEmpty() ? DataResult.error(() -> "Tool parts cannot be empty") : DataResult.success(m))
+                    .fieldOf("parts").forGetter(ToolData::parts)
+    ).apply(instance, ToolData::new));
 
-    private ToolData(Item item, CompoundTag nbt) {
-        this.item = item;
-        this.nbt = nbt;
-    }
-
-    public static ToolData from(Item item, CompoundTag nbt) {
-        return new ToolData(item, nbt);
-    }
-
-    public StatsData getStats() {
-        if (stats == null) {
-            stats = StatsData.readFromNBT(nbt.getCompound("stats"));
-        }
-        return stats;
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, ToolData> STREAM_CODEC = StreamCodec.composite(
+            ModularDefinition.STREAM_CODEC, ToolData::definition,
+            ByteBufCodecs.map(Object2ObjectOpenHashMap::new, ByteBufCodecs.STRING_UTF8, ToolPartType.STREAM_CODEC), ToolData::parts,
+            ToolData::new
+    );
 }

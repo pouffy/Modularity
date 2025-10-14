@@ -9,6 +9,7 @@ import com.pouffydev.modularity.datagen.client.ModulaItemModelProvider;
 import com.pouffydev.modularity.datagen.client.ModulaLangProvider;
 import com.pouffydev.modularity.datagen.server.ModulaItemTagProvider;
 import com.pouffydev.modularity.datagen.server.ModulaMaterialTagProvider;
+import com.pouffydev.modularity.datagen.server.ModulaPartTagProvider;
 import net.minecraft.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -57,6 +58,7 @@ public class ModulaDatagen {
 
         dataGenerator.addProvider(server, itemTagProvider);
         dataGenerator.addProvider(server, bindRegistries(ModulaMaterialTagProvider::new, modulaLookupProvider));
+        dataGenerator.addProvider(server, new ModulaPartTagProvider(packOutput, lookupProvider, fileHelper));
 
         dataGenerator.addProvider(event.includeClient() && event.includeServer(), language);
 

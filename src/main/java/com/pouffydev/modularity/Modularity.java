@@ -52,6 +52,7 @@ public class Modularity {
     }
 
     public static ResourceLocation modularityPath(String path) {
+        if (path.contains(":")) return ResourceLocation.parse(path);
         return ResourceLocation.fromNamespaceAndPath(MODULARITY, path);
     }
 }

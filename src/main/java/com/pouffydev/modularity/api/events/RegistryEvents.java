@@ -24,6 +24,7 @@ public class RegistryEvents {
     public void newRegistry(NewRegistryEvent event) {
         event.register(ModularityRegistries.TOOL_PART_TYPE_REGISTRY);
         event.register(ModularityRegistries.PART_STAT_REGISTRY);
+        event.register(ModularityRegistries.MODULAR_DEFINITION_REGISTRY);
     }
 
     @SubscribeEvent

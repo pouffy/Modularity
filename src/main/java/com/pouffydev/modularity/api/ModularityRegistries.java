@@ -5,6 +5,7 @@ import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.api.assembly.deconstruction.ToolDeconstructor;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
+import com.pouffydev.modularity.api.tool.ModularDefinition;
 import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaDeconstructors;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
@@ -25,9 +26,11 @@ public class ModularityRegistries {
 
     public static final ResourceKey<Registry<ToolDeconstructor>> TOOL_DECONSTRUCTOR = createRegistryKey("tool_deconstructor");
 
+    public static final ResourceKey<Registry<ModularDefinition>> MODULAR_DEFINITION = createRegistryKey("modular_definition");
 
     public static final Registry<ToolPartType<?>> TOOL_PART_TYPE_REGISTRY = makeSyncedRegistry(TOOL_PART_TYPE);
     public static final Registry<IPartStat<?>> PART_STAT_REGISTRY = makeSyncedRegistry(PART_STAT);
+    public static final Registry<ModularDefinition> MODULAR_DEFINITION_REGISTRY = makeSyncedRegistry(MODULAR_DEFINITION);
 
 
     private static <T> ResourceKey<Registry<T>> createRegistryKey(String name) {

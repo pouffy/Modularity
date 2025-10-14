@@ -8,6 +8,7 @@ import com.pouffydev.modularity.api.tool.ModularPart;
 import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.RegistryHelper;
 import com.pouffydev.modularity.common.tools.data.StatsData;
+import com.pouffydev.modularity.common.tools.data.ToolData;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ModulaDataComponents {
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = RegistryHelper.createRegister(Registries.DATA_COMPONENT_TYPE);
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ModularDefinition>> MODULAR_DEFINITION = COMPONENTS.register("modular_definition", () -> DataComponentType.<ModularDefinition>builder().persistent(ModularDefinition.CODEC).networkSynchronized(ModularDefinition.STREAM_CODEC).build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ToolData>> MODULAR_DEFINITION = COMPONENTS.register("tool_data", () -> DataComponentType.<ToolData>builder().persistent(ToolData.CODEC).networkSynchronized(ToolData.STREAM_CODEC).build());
 
     //Modular Stuff
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<ModularPart>>> MULTIPART = COMPONENTS.register("multipart", () -> DataComponentType.<List<ModularPart>>builder().persistent(ModularPart.LIST_CODEC).networkSynchronized(ModularPart.LIST_STREAM_CODEC).build());

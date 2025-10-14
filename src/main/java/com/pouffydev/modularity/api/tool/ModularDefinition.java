@@ -1,22 +1,49 @@
 package com.pouffydev.modularity.api.tool;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.pouffydev.modularity.api.ModularityRegistries;
+import com.pouffydev.modularity.api.material.ToolMaterial;
+import com.pouffydev.modularity.api.material.parts.ToolPartType;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.tags.TagKey;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public record ModularDefinition(List<ModularPart> parts) {
-    public static final Codec<ModularDefinition> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                    ModularPart.LIST_CODEC.fieldOf("parts").forGetter(ModularDefinition::parts)
-            ).apply(instance, ModularDefinition::new));
+public class ModularDefinition {
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ModularDefinition> STREAM_CODEC = StreamCodec.composite(
-            ModularPart.LIST_STREAM_CODEC, ModularDefinition::parts,
-            ModularDefinition::new
-    );
+    public Map<String, TagKey<ToolPartType<?>>> parts;
+
+    public static final Codec<Holder<ModularDefinition>> CODEC = RegistryFixedCodec.create(ModularityRegistries.MODULAR_DEFINITION);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<ModularDefinition>> STREAM_CODEC = ByteBufCodecs.holderRegistry(ModularityRegistries.MODULAR_DEFINITION);
+
+
+    public ModularDefinition() {
+        this.parts = new HashMap<>();
+    }
+
+    public ModularDefinition(String[] names, TagKey<ToolPartType<?>>[] tags) {
+        if (names.length != tags.length) throw new IllegalArgumentException("names and tags must have same length");
+        Map<String, TagKey<ToolPartType<?>>> parts = new HashMap<>();
+        for (int i = 0; i < names.length; i++) {
+            parts.put(names[i], tags[i]);
+        }
+        this.parts = parts;
+    }
+
+    public ModularDefinition addPart(String name, TagKey<ToolPartType<?>> tag) {
+        this.parts.put(name, tag);
+        return this;
+    }
+
+    public boolean supports(String part, Holder<ToolPartType<?>> holder) {
+        if (this.parts.containsKey(part)) {
+            return holder.is(this.parts.get(part));
+        }
+        return false;
+    }
 }
