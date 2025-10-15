@@ -6,13 +6,17 @@ import com.mojang.serialization.DataResult;
 import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.common.tools.data.StatsData;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -65,4 +69,19 @@ public class HarvestTiers {
                 }
                 return result;
             }, TierSortingRegistry::getName);
+
+    public static final StreamCodec<FriendlyByteBuf, Tier> TIER_STREAM_CODEC = new StreamCodec<>() {
+        @Override
+        public @NotNull Tier decode(FriendlyByteBuf buffer) {
+            ResourceLocation location = buffer.readResourceLocation();
+            return Objects.requireNonNull(TierSortingRegistry.byName(location));
+        }
+
+        @Override
+        public void encode(FriendlyByteBuf buffer, @NotNull Tier tier) {
+            if (!TierSortingRegistry.isTierSorted(tier)) return;
+            ResourceLocation location = TierSortingRegistry.getName(tier);
+            buffer.writeResourceLocation(location);
+        }
+    };
 }

@@ -20,14 +20,14 @@ public class ModulaItems {
     public static final DeferredRegister.Items ITEMS = RegistryHelper.createRegister(DeferredRegister::createItems);
 
     // Tool Heads (can be damaged)
-    public static final DeferredItem<DamageablePartItem> PICKAXE_HEAD = registerDamageableToolPart("pickaxe_head", ModulaToolParts.HEAD);
-    public static final DeferredItem<DamageablePartItem> AXE_HEAD = registerDamageableToolPart("axe_head", ModulaToolParts.HEAD);
-    public static final DeferredItem<DamageablePartItem> SHOVEL_HEAD = registerDamageableToolPart("shovel_head", ModulaToolParts.HEAD);
-    public static final DeferredItem<DamageablePartItem> HOE_HEAD = registerDamageableToolPart("hoe_head", ModulaToolParts.HEAD);
-    public static final DeferredItem<DamageablePartItem> SWORD_BLADE = registerDamageableToolPart("sword_blade", ModulaToolParts.HEAD);
+    public static final DeferredItem<DamageablePartItem> PICKAXE_HEAD = registerDamageableToolPart("pickaxe_head", ModulaToolParts.PICKAXE_HEAD);
+    public static final DeferredItem<DamageablePartItem> AXE_HEAD = registerDamageableToolPart("axe_head", ModulaToolParts.AXE_HEAD);
+    public static final DeferredItem<DamageablePartItem> SHOVEL_HEAD = registerDamageableToolPart("shovel_head", ModulaToolParts.SHOVEL_HEAD);
+    public static final DeferredItem<DamageablePartItem> HOE_HEAD = registerDamageableToolPart("hoe_head", ModulaToolParts.HOE_HEAD);
+    public static final DeferredItem<DamageablePartItem> SWORD_BLADE = registerDamageableToolPart("sword_blade", ModulaToolParts.SIMPLE_BLADE);
     // Extra Parts
     public static final DeferredItem<ToolPartItem> GUARD = registerToolPart("guard", ModulaToolParts.GUARD);
-    public static final DeferredItem<ToolPartItem> TOOL_HANDLE = registerToolPart("tool_handle", ModulaToolParts.HANDLE);
+    public static final DeferredItem<ToolPartItem> TOOL_HANDLE = registerToolPart("tool_handle", ModulaToolParts.BASIC_HANDLE);
 
     // Tools
     public static final DeferredItem<ModularSwordItem> SWORD = register("sword", () -> new ModularSwordItem(new Item.Properties()));

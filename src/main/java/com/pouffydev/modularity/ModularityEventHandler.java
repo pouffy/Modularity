@@ -1,9 +1,6 @@
 package com.pouffydev.modularity;
 
-import com.pouffydev.modularity.api.events.CapabilityEvents;
-import com.pouffydev.modularity.api.events.CommonEvents;
-import com.pouffydev.modularity.api.events.PlayerEvents;
-import com.pouffydev.modularity.api.events.RegistryEvents;
+import com.pouffydev.modularity.api.events.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -17,7 +14,7 @@ public class ModularityEventHandler {
     public void registerModEvents(IEventBus eventBus) {
         eventBus.register(new RegistryEvents());
         eventBus.register(new CapabilityEvents());
-        //eventBus.register(new NetworkEvents());
+        eventBus.register(new NetworkEvents());
     }
 
     public void registerForgeEvents(IEventBus eventBus) {

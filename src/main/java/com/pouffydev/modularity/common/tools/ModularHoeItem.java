@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Pair;
 import com.pouffydev.modularity.api.material.item.ITabFiller;
 import com.pouffydev.modularity.api.tool.ModularItem;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
 import com.pouffydev.modularity.common.util.ToolHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -88,6 +87,6 @@ public class ModularHoeItem extends ModularItem implements ITabFiller {
     }
 
     private void accept(Consumer<ItemStack> output, HolderLookup.Provider lookupProvider) {
-        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.HEAD.get());
+        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.HOE_HEAD.get());
     }
 }

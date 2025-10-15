@@ -6,9 +6,9 @@ import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.info.MaterialInfo;
 import com.pouffydev.modularity.api.material.stats.MaterialStats;
 import com.pouffydev.modularity.api.tool.SerializableTier;
-import com.pouffydev.modularity.common.tools.parts.ToolHandle;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
-import com.pouffydev.modularity.common.tools.parts.ToolGuard;
+import com.pouffydev.modularity.common.tools.parts.handles.BasicHandle;
+import com.pouffydev.modularity.common.tools.parts.main.DiggerHead;
+import com.pouffydev.modularity.common.tools.parts.fittings.Guard;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -41,32 +41,32 @@ public class ModulaMaterials {
     private static void registerMaterials(BootstrapContext<ToolMaterial> context) {
         register(context, UNKNOWN, new MaterialInfo(TextColor.fromRgb(0xd23de5), "unknown"), new MaterialStats(List.of()));
         register(context, WOOD, new MaterialInfo(TextColor.fromRgb(0x5e4719), "wood"), new MaterialStats(List.of(
-                new ToolHead(60, -2.8f, Tiers.WOOD, 1.0F),
-                new ToolHandle(0f, 0f, 0f, 0f),
-                new ToolGuard(0.15f)
+                new DiggerHead(60, -2.8f, Tiers.WOOD, 1.0F),
+                new BasicHandle(0f, 0f, 0f, 0f),
+                new Guard(0.15f)
         )));
         register(context, STONE, new MaterialInfo(TextColor.fromRgb(0x7f7f7f), "stone"), new MaterialStats(List.of(
-                new ToolHead(131, -2.8f, Tiers.STONE, 1.0F),
-                new ToolGuard(-0.15f)
+                new DiggerHead(131, -2.8f, Tiers.STONE, 1.0F),
+                new Guard(-0.15f)
         )));
         register(context, IRON, new MaterialInfo(TextColor.fromRgb(0xc1c1c1), "iron"), new MaterialStats(List.of(
-                new ToolHead(250, -2.8f, Tiers.IRON, 1.0F),
-                new ToolGuard(-0.3f)
+                new DiggerHead(250, -2.8f, Tiers.IRON, 1.0F),
+                new Guard(-0.3f)
         )));
         register(context, DIAMOND, new MaterialInfo(TextColor.fromRgb(0x2be0d8), "diamond"), new MaterialStats(List.of(
-                new ToolHead(1561, -2.8f, Tiers.DIAMOND, 1.0F),
-                new ToolGuard(-0.45f)
+                new DiggerHead(1561, -2.8f, Tiers.DIAMOND, 1.0F),
+                new Guard(-0.45f)
         )));
         register(context, GOLD, new MaterialInfo(TextColor.fromRgb(0xfad64a), "gold"), new MaterialStats(List.of(
-                new ToolHead(32, -2.8f, Tiers.GOLD, 1.0F),
-                new ToolGuard(0.25f)
+                new DiggerHead(32, -2.8f, Tiers.GOLD, 1.0F),
+                new Guard(0.25f)
         )));
         register(context, NETHERITE, new MaterialInfo(TextColor.fromRgb(0x5d565d), "netherite"), new MaterialStats(List.of(
-                new ToolHead(2031, -2.8f, Tiers.NETHERITE, 1.0F),
-                new ToolGuard(-0.5f)
+                new DiggerHead(2031, -2.8f, Tiers.NETHERITE, 1.0F),
+                new Guard(-0.5f)
         )));
         register(context, NETHER_WOOD, new MaterialInfo(TextColor.fromRgb(0x603432), "nether_wood"), new MaterialStats(List.of(
-                new ToolHandle(0.2f, 0.3f, -0.15f, 0.25f)
+                new BasicHandle(0.2f, 0.3f, -0.15f, 0.25f)
         )));
     }
 

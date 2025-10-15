@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.material.ToolMaterial;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -20,10 +21,21 @@ public class ToolPartType<T extends IToolPart> {
 
     private final Holder.Reference<ToolPartType<?>> builtInRegistryHolder;
     public final MapCodec<T> codec;
+    public final StreamCodec<? extends ByteBuf, T> streamCodec;
 
-    public ToolPartType(MapCodec<T> codec) {
+    public <B extends ByteBuf> ToolPartType(MapCodec<T> codec, StreamCodec<B, T> streamCodec) {
+        this.streamCodec = streamCodec;
         this.builtInRegistryHolder = ModularityRegistries.TOOL_PART_TYPE_REGISTRY.createIntrusiveHolder(this);
         this.codec = codec;
+    }
+
+    public MapCodec<T> getCodec() {
+        return codec;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <B extends ByteBuf> StreamCodec<B, T> getStreamCodec() {
+        return (StreamCodec<B, T>) streamCodec;
     }
 
     public static final Codec<ToolPartType<?>> CODEC = ModularityRegistries.TOOL_PART_TYPE_REGISTRY.byNameCodec();

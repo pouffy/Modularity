@@ -2,13 +2,11 @@ package com.pouffydev.modularity.datagen.server;
 
 import com.pouffydev.modularity.Modularity;
 import com.pouffydev.modularity.api.ModularityRegistries;
-import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.TagKey;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +28,7 @@ public class ModulaPartTagProvider extends IntrinsicHolderTagsProvider<ToolPartT
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(handles).add(
-                ModulaToolParts.HANDLE.get()
+                ModulaToolParts.BASIC_HANDLE.get()
         );
     }
 

@@ -10,8 +10,7 @@ import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaDeconstructors;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaTiers;
-import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
-import com.pouffydev.modularity.common.tools.parts.stat.PartStatType;
+import com.pouffydev.modularity.common.tools.parts.stat.PartStat;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -22,14 +21,14 @@ public class ModularityRegistries {
     public static final ResourceKey<Registry<ToolMaterial>> TOOL_MATERIAL = createRegistryKey("tool_material");
     public static final ResourceKey<Registry<SerializableTier>> TOOL_TIER = createRegistryKey("tool_tier");
     public static final ResourceKey<Registry<ToolPartType<?>>> TOOL_PART_TYPE = createRegistryKey("tool_part_type");
-    public static final ResourceKey<Registry<IPartStat<?>>> PART_STAT = createRegistryKey("part_stat");
+    public static final ResourceKey<Registry<PartStat<?>>> PART_STAT = createRegistryKey("part_stat");
 
     public static final ResourceKey<Registry<ToolDeconstructor>> TOOL_DECONSTRUCTOR = createRegistryKey("tool_deconstructor");
 
     public static final ResourceKey<Registry<ModularDefinition>> MODULAR_DEFINITION = createRegistryKey("modular_definition");
 
     public static final Registry<ToolPartType<?>> TOOL_PART_TYPE_REGISTRY = makeSyncedRegistry(TOOL_PART_TYPE);
-    public static final Registry<IPartStat<?>> PART_STAT_REGISTRY = makeSyncedRegistry(PART_STAT);
+    public static final Registry<PartStat<?>> PART_STAT_REGISTRY = makeSyncedRegistry(PART_STAT);
     public static final Registry<ModularDefinition> MODULAR_DEFINITION_REGISTRY = makeSyncedRegistry(MODULAR_DEFINITION);
 
 

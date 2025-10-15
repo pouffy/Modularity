@@ -1,12 +1,9 @@
 package com.pouffydev.modularity.common.registry;
 
-import com.mojang.serialization.MapCodec;
 import com.pouffydev.modularity.api.ModularityRegistries;
-import com.pouffydev.modularity.api.material.parts.IToolPart;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.api.tool.ModularDefinition;
 import com.pouffydev.modularity.common.RegistryHelper;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
 import net.minecraft.tags.TagKey;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;

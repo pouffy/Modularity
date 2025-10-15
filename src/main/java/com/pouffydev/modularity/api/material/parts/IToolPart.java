@@ -5,20 +5,16 @@ import com.mojang.serialization.Codec;
 import com.pouffydev.modularity.api.ModularityRegistries;
 import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.common.tools.data.StatsData;
-import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
+import com.pouffydev.modularity.common.tools.parts.stat.PartStat;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-import org.openjdk.nashorn.api.tree.SwitchTree;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public interface IToolPart {
     Codec<IToolPart> DIRECT_CODEC = Codec.lazyInitialized(ModularityRegistries.TOOL_PART_TYPE_REGISTRY::byNameCodec)
-            .dispatch(IToolPart::getType, ToolPartType::codec);
+            .dispatch(IToolPart::getType, ToolPartType::getCodec);
 
     ToolPartType<?> getType();
 
@@ -36,23 +32,23 @@ public interface IToolPart {
 
     class StatModifier<T> {
         public final ModifyType modifyType;
-        public final Pair<IPartStat<T>, T> value;
+        public final Pair<PartStat<T>, T> value;
 
-        public StatModifier(ModifyType modifyType, IPartStat<T> stat, T value) {
+        public StatModifier(ModifyType modifyType, PartStat<T> stat, T value) {
             this.modifyType = modifyType;
             this.value = Pair.of(stat, value);
         }
 
-        public static <T> StatModifier<T> bonus(IPartStat<T> stat, T value) {
+        public static <T> StatModifier<T> bonus(PartStat<T> stat, T value) {
             return new StatModifier<>(ModifyType.BONUS, stat, value);
         }
-        public static <T> StatModifier<T> multiplier(IPartStat<T> stat, T value) {
+        public static <T> StatModifier<T> multiplier(PartStat<T> stat, T value) {
             return new StatModifier<>(ModifyType.MULTIPLIER, stat, value);
         }
-        public static <T> StatModifier<T> percentBoost(IPartStat<T> stat, T value) {
+        public static <T> StatModifier<T> percentBoost(PartStat<T> stat, T value) {
             return new StatModifier<>(ModifyType.PERCENT_BOOST, stat, value);
         }
-        public static <T> StatModifier<T> override(IPartStat<T> stat, T value) {
+        public static <T> StatModifier<T> override(PartStat<T> stat, T value) {
             return new StatModifier<>(ModifyType.OVERRIDE, stat, value);
         }
 
@@ -66,8 +62,12 @@ public interface IToolPart {
             toolStatsBuilder.set(stat, apply(original));
         }
 
-        public boolean test(IPartStat<?> stat) {
+        public boolean test(PartStat<?> stat) {
             return stat.equals(this.value.getFirst());
+        }
+
+        public Component format() {
+            return this.value.getFirst().formatValue(this.modifyType, this.value.getSecond());
         }
     }
 

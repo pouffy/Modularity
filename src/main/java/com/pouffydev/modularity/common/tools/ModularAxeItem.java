@@ -4,7 +4,6 @@ import com.pouffydev.modularity.api.material.item.ITabFiller;
 import com.pouffydev.modularity.api.tool.ModularItem;
 import com.pouffydev.modularity.common.registry.ModulaItemAbilities;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
 import com.pouffydev.modularity.common.util.ToolHelpers;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -13,7 +12,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -25,7 +23,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.ItemAbilities;
@@ -118,6 +115,6 @@ public class ModularAxeItem extends ModularItem implements ITabFiller {
     }
 
     private void accept(Consumer<ItemStack> output, HolderLookup.Provider lookupProvider) {
-        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.HEAD.get());
+        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.AXE_HEAD.get());
     }
 }

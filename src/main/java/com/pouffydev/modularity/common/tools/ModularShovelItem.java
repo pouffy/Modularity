@@ -3,7 +3,6 @@ package com.pouffydev.modularity.common.tools;
 import com.pouffydev.modularity.api.material.item.ITabFiller;
 import com.pouffydev.modularity.api.tool.ModularItem;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
 import com.pouffydev.modularity.common.util.ToolHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
@@ -89,6 +87,6 @@ public class ModularShovelItem extends ModularItem implements ITabFiller {
     }
 
     private void accept(Consumer<ItemStack> output, HolderLookup.Provider lookupProvider) {
-        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.HEAD.get());
+        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.SHOVEL_HEAD.get());
     }
 }

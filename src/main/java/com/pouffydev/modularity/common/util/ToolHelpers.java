@@ -6,14 +6,12 @@ import com.pouffydev.modularity.api.material.parts.IToolPart;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.api.tool.ModularItem;
 import com.pouffydev.modularity.api.tool.ModularPart;
-import com.pouffydev.modularity.api.tool.SerializableTier;
 import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaPartStats;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
 import com.pouffydev.modularity.common.registry.bootstrap.ModulaMaterials;
 import com.pouffydev.modularity.common.tools.data.StatsData;
-import com.pouffydev.modularity.common.tools.parts.ToolHead;
-import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
+import com.pouffydev.modularity.common.tools.parts.stat.PartStat;
 import com.pouffydev.modularity.datagen.server.ModulaMaterialTagProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -35,22 +33,11 @@ import static com.pouffydev.modularity.common.registry.ModulaDataComponents.TOOL
 
 public class ToolHelpers {
 
-    public static ToolHead getToolHead(ItemStack stack) {
-        ToolHead head = ToolHead.EMPTY;
-        if (stack.getItem() instanceof ModularItem) {
-            var material = ModularItem.getMainMaterial(stack);
-            if (material != null) {
-                head = (ToolHead) material.value().stats().getPartOfType(ModulaToolParts.HEAD.get());
-            }
-        }
-        return head;
-    }
-
-    public static <T> T getStat(ItemStack stack, IPartStat<T> stat) {
+    public static <T> T getStat(ItemStack stack, PartStat<T> stat) {
         return getStat(stack, stat, stat.getDefaultValue());
     }
 
-    public static <T> T getStat(ItemStack stack, IPartStat<T> stat, T defaultValue) {
+    public static <T> T getStat(ItemStack stack, PartStat<T> stat, T defaultValue) {
         StatsData statsData = stack.getOrDefault(TOOL_STATS, StatsData.EMPTY);
         T value = statsData.hasStat(stat) ? statsData.get(stat) : defaultValue;
         if (stack.has(ModulaDataComponents.REINIT_COMPONENTS.get())) {
@@ -64,7 +51,7 @@ public class ToolHelpers {
         return value;
     }
 
-    public static float getStatWithBase(ItemStack stack, IPartStat<Float> stat, float defaultValue, float baseValue) {
+    public static float getStatWithBase(ItemStack stack, PartStat<Float> stat, float defaultValue, float baseValue) {
         StatsData statsData = stack.getOrDefault(TOOL_STATS, StatsData.EMPTY);
         float value = statsData.hasStat(stat) ? statsData.get(stat) : defaultValue;
         if (stack.has(ModulaDataComponents.REINIT_COMPONENTS.get())) {
@@ -110,7 +97,7 @@ public class ToolHelpers {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> List<IToolPart.StatModifier<T>> getStatModifiers(ItemStack stack, IPartStat<T> type) {
+    public static <T> List<IToolPart.StatModifier<T>> getStatModifiers(ItemStack stack, PartStat<T> type) {
         List<IToolPart.StatModifier<T>> statModifiers = new ArrayList<>();
         var parts = ModularItem.getPartsFromStack(stack);
         for (var partType : parts) {
@@ -196,7 +183,7 @@ public class ToolHelpers {
                 parts.add(ToolHelpers.resolveForPart(headMaterial, materialLookup, partType));
             }
             Holder<ToolMaterial> handleMaterial = materialLookup.getOrThrow(ToolHelpers.tabHandleMaterial(headMaterial));
-            ModularPart handle = ToolHelpers.resolveForPart(handleMaterial, materialLookup, ModulaToolParts.HANDLE.get());
+            ModularPart handle = ToolHelpers.resolveForPart(handleMaterial, materialLookup, ModulaToolParts.BASIC_HANDLE.get());
             parts.add(handle);
             ItemStack stack = new ItemStack(item);
             stack.set(ModulaDataComponents.MULTIPART, parts);

@@ -1,15 +1,10 @@
 package com.pouffydev.modularity.common.tools;
 
-import com.pouffydev.modularity.api.ModularityRegistries;
-import com.pouffydev.modularity.api.material.ToolMaterial;
 import com.pouffydev.modularity.api.material.item.ITabFiller;
 import com.pouffydev.modularity.api.tool.ModularItem;
-import com.pouffydev.modularity.api.tool.ModularPart;
-import com.pouffydev.modularity.common.registry.ModulaDataComponents;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
 import com.pouffydev.modularity.common.util.ToolHelpers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -23,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class ModularSwordItem extends ModularItem implements ITabFiller {
@@ -63,20 +57,7 @@ public class ModularSwordItem extends ModularItem implements ITabFiller {
     }
 
     private void accept(Consumer<ItemStack> output, HolderLookup.Provider lookupProvider) {
-        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.HEAD.get(), ModulaToolParts.GUARD.get());
+        ToolHelpers.resolveTool(this, output, lookupProvider, ModulaToolParts.SIMPLE_BLADE.get(), ModulaToolParts.GUARD.get());
     }
 
-    void addMaterials(Consumer<ItemStack> items, HolderLookup.Provider lookupProvider) {
-        var materialLookup = lookupProvider.lookupOrThrow(ModularityRegistries.TOOL_MATERIAL);
-        for (Holder<ToolMaterial> bladeMaterial : materialLookup.listElements().toList()) {
-            ModularPart blade = ToolHelpers.resolveForPart(bladeMaterial, materialLookup, ModulaToolParts.HEAD.get());
-            ModularPart hilt = ToolHelpers.resolveForPart(bladeMaterial, materialLookup, ModulaToolParts.GUARD.get());
-            Holder<ToolMaterial> handleMaterial = materialLookup.getOrThrow(ToolHelpers.tabHandleMaterial(bladeMaterial));
-            ModularPart handle = ToolHelpers.resolveForPart(handleMaterial, materialLookup, ModulaToolParts.HANDLE.get());
-            ItemStack stack = new ItemStack(this);
-            stack.set(ModulaDataComponents.MULTIPART, List.of(blade, handle, hilt));
-            stack.set(ModulaDataComponents.REINIT_COMPONENTS, true);
-            items.accept(stack.copy());
-        }
-    }
 }

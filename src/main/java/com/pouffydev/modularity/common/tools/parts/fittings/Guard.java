@@ -1,4 +1,4 @@
-package com.pouffydev.modularity.common.tools.parts;
+package com.pouffydev.modularity.common.tools.parts.fittings;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -8,20 +8,27 @@ import com.pouffydev.modularity.api.material.parts.IToolPart;
 import com.pouffydev.modularity.api.material.parts.ToolPartType;
 import com.pouffydev.modularity.common.registry.ModulaPartStats;
 import com.pouffydev.modularity.common.registry.ModulaToolParts;
-import com.pouffydev.modularity.common.tools.parts.stat.IPartStat;
 import com.pouffydev.modularity.common.util.TooltipUtils;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public record ToolGuard(float attackSpeed) implements IToolPart {
-    public static final MapCodec<ToolGuard> CODEC = RecordCodecBuilder.mapCodec(instance ->
+public record Guard(float critChance) implements IToolPart {
+    public static final MapCodec<Guard> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(
-                    Codec.FLOAT.optionalFieldOf("speed", 0f).forGetter(ToolGuard::attackSpeed)
-            ).apply(instance, ToolGuard::new));
+                    Codec.FLOAT.optionalFieldOf("crit_chance", 0f).forGetter(Guard::critChance)
+            ).apply(instance, Guard::new));
+
+    public static final StreamCodec<ByteBuf, Guard> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.FLOAT, Guard::critChance,
+            Guard::new
+    );
 
     @Override
     public ToolPartType<?> getType() {
@@ -33,28 +40,15 @@ public record ToolGuard(float attackSpeed) implements IToolPart {
         tooltip.accept(TooltipUtils.part(material, ModulaToolParts.GUARD));
         var materialStats = material.value().stats();
         if (!materialStats.supportsType(getType())) return;
-        var hiltStats = (ToolGuard) materialStats.getPartOfType(getType());
-        if (hiltStats == null) return;
-        tooltip.accept(TooltipUtils.indent(2, IPartStat.formatColoredBonus("modularity.tooltip.stat.attack_speed", hiltStats.attackSpeed())));
+        for(StatModifier<?> modifier : getStats()) {
+            tooltip.accept(TooltipUtils.indent(2, modifier.format()));
+        }
     }
 
     @Override
     public List<StatModifier<?>> getStats() {
         var modifiers = new ArrayList<StatModifier<?>>();
-        whenChanged(modifiers::add, ModulaPartStats.ATTACK_SPEED.get(), attackSpeed);
+        modifiers.add(StatModifier.bonus(ModulaPartStats.CRIT_CHANCE.get(), critChance));
         return modifiers;
-    }
-
-    /**
-     * Simple test to only add the stats if the values aren't the default empty values.
-     * Prevents components being added for stats that aren't altered.
-     * @param modifier Adds the modifier to the list.
-     * @param stat The part stat to modify
-     * @param value The value to apply
-     */
-    void whenChanged(Consumer<StatModifier<?>> modifier, IPartStat<Float> stat, float value) {
-        var mod = StatModifier.bonus(stat, value);
-        if (value != 0f)
-            modifier.accept(mod);
     }
 }

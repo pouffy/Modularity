@@ -16,14 +16,11 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class TierStat implements IPartStat<Tier> {
-    @Override
-    public ResourceLocation getName() {
-        return ModularityRegistries.PART_STAT_REGISTRY.getKey(this);
-    }
+public class TierStat extends PartStat<Tier> {
 
     @Override
     public Tier getDefaultValue() {
@@ -68,6 +65,26 @@ public class TierStat implements IPartStat<Tier> {
     @Override
     public Component formatValue(Tier value) {
         return Component.translatable(getName().toLanguageKey("part_stat")).append(HarvestTiers.getName(value));
+    }
+
+    @Override
+    public @Nullable Component formatBonus(Tier value) {
+        return null;
+    }
+
+    @Override
+    public @Nullable Component formatMultiplier(Tier value) {
+        return null;
+    }
+
+    @Override
+    public @Nullable Component formatPercentBoost(Tier value) {
+        return null;
+    }
+
+    @Override
+    public @Nullable Component formatOverride(Tier value) {
+        return null;
     }
 
     @Override
